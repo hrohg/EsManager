@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EsStockDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EsMembers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ClubSixteenId" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="ESSharedProducts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OriginalId" Type="uniqueidentifier" />
+          <Property Name="BrandId" Type="bigint" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="Barcode" Type="nvarchar" MaxLength="128" />
+          <Property Name="HCDCS" Type="nvarchar" MaxLength="12" />
+          <Property Name="Description" Type="ntext" />
+          <Property Name="Mu" Type="nvarchar" MaxLength="10" />
+          <Property Name="IsWeight" Type="bit" />
+          <Property Name="Note" Type="ntext" />
+          <Property Name="CostPrice" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="OldPrice" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="Price" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="Discount" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="DealerPrice" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="DealerDiscount" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="MinQuantity" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="ExpiryDays" Type="int" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="256" />
+          <Property Name="EsMemberId" Type="bigint" Nullable="false" />
+          <Property Name="LastModifierId" Type="bigint" />
+          <Property Name="IsEnable" Type="bit" />
+          <Property Name="IsChecked" Type="bit" />
+        </EntityType>
+        <EntityContainer Name="EsStockDbModelStoreContainer">
+          <EntitySet Name="EsMembers" EntityType="Self.EsMembers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ESSharedProducts" EntityType="Self.ESSharedProducts" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EsStockDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EsMembers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClubSixteenId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="EsStockDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EsMembers" EntityType="Self.EsMembers" />
+          <EntitySet Name="ESSharedProducts" EntityType="EsStockDbModel.ESSharedProducts" />
+        </EntityContainer>
+        <EntityType Name="ESSharedProducts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="OriginalId" Type="Guid" />
+          <Property Name="BrandId" Type="Int64" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Barcode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="HCDCS" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mu" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="IsWeight" Type="Boolean" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CostPrice" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="OldPrice" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="Price" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="Discount" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="DealerPrice" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="DealerDiscount" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="MinQuantity" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="ExpiryDays" Type="Int32" />
+          <Property Name="ImagePath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EsMemberId" Type="Int64" Nullable="false" />
+          <Property Name="LastModifierId" Type="Int64" />
+          <Property Name="IsEnable" Type="Boolean" />
+          <Property Name="IsChecked" Type="Boolean" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EsStockDbModelStoreContainer" CdmEntityContainer="EsStockDbEntities">
+          <EntitySetMapping Name="EsMembers">
+            <EntityTypeMapping TypeName="EsStockDbModel.EsMembers">
+              <MappingFragment StoreEntitySet="EsMembers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ClubSixteenId" ColumnName="ClubSixteenId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ESSharedProducts">
+            <EntityTypeMapping TypeName="EsStockDbModel.ESSharedProducts">
+              <MappingFragment StoreEntitySet="ESSharedProducts">
+                <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
+                <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
+                <ScalarProperty Name="LastModifierId" ColumnName="LastModifierId" />
+                <ScalarProperty Name="EsMemberId" ColumnName="EsMemberId" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="ExpiryDays" ColumnName="ExpiryDays" />
+                <ScalarProperty Name="MinQuantity" ColumnName="MinQuantity" />
+                <ScalarProperty Name="DealerDiscount" ColumnName="DealerDiscount" />
+                <ScalarProperty Name="DealerPrice" ColumnName="DealerPrice" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="OldPrice" ColumnName="OldPrice" />
+                <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="IsWeight" ColumnName="IsWeight" />
+                <ScalarProperty Name="Mu" ColumnName="Mu" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="HCDCS" ColumnName="HCDCS" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+                <ScalarProperty Name="OriginalId" ColumnName="OriginalId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
