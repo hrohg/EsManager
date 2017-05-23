@@ -19,10 +19,7 @@ namespace ES.DataAccess.Models
             : base("name=EsStockDbEntities")
         {
         }
-        public EsStockDbEntities(string connectionString)
-            : base(connectionString)
-        {
-        }
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -30,5 +27,6 @@ namespace ES.DataAccess.Models
     
         public virtual DbSet<EsMembers> EsMembers { get; set; }
         public virtual DbSet<ESSharedProducts> ESSharedProducts { get; set; }
+        public virtual DbSet<EsCategories> EsCategories { get; set; }
     }
 }

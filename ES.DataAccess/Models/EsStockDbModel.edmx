@@ -5,6 +5,20 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="EsStockDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EsCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ParentId" Type="uniqueidentifier" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Description" Type="ntext" />
+          <Property Name="HCDCS" Type="nvarchar" MaxLength="12" />
+          <Property Name="Logo" Type="nvarchar" MaxLength="250" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="LastModificationDate" Type="datetime" Nullable="false" />
+          <Property Name="LastModifierId" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="EsMembers">
           <Key>
             <PropertyRef Name="Id" />
@@ -42,9 +56,26 @@
           <Property Name="IsEnable" Type="bit" />
           <Property Name="IsChecked" Type="bit" />
         </EntityType>
+        <Association Name="FK_EsCategories_EsCategories">
+          <End Role="EsCategories" Type="Self.EsCategories" Multiplicity="0..1" />
+          <End Role="EsCategories1" Type="Self.EsCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EsCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EsCategories1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="EsStockDbModelStoreContainer">
+          <EntitySet Name="EsCategories" EntityType="Self.EsCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EsMembers" EntityType="Self.EsMembers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ESSharedProducts" EntityType="Self.ESSharedProducts" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EsCategories_EsCategories" Association="Self.FK_EsCategories_EsCategories">
+            <End Role="EsCategories" EntitySet="EsCategories" />
+            <End Role="EsCategories1" EntitySet="EsCategories" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -62,6 +93,11 @@
         <EntityContainer Name="EsStockDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="EsMembers" EntityType="Self.EsMembers" />
           <EntitySet Name="ESSharedProducts" EntityType="EsStockDbModel.ESSharedProducts" />
+          <EntitySet Name="EsCategories" EntityType="EsStockDbModel.EsCategories" />
+          <AssociationSet Name="FK_EsCategories_EsCategories" Association="EsStockDbModel.FK_EsCategories_EsCategories">
+            <End Role="EsCategories" EntitySet="EsCategories" />
+            <End Role="EsCategories1" EntitySet="EsCategories" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ESSharedProducts">
           <Key>
@@ -91,6 +127,34 @@
           <Property Name="IsEnable" Type="Boolean" />
           <Property Name="IsChecked" Type="Boolean" />
         </EntityType>
+        <EntityType Name="EsCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ParentId" Type="Guid" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HCDCS" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Logo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="LastModificationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifierId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="EsCategories1" Relationship="EsStockDbModel.FK_EsCategories_EsCategories" FromRole="EsCategories" ToRole="EsCategories1" />
+          <NavigationProperty Name="EsCategories2" Relationship="EsStockDbModel.FK_EsCategories_EsCategories" FromRole="EsCategories1" ToRole="EsCategories" />
+        </EntityType>
+        <Association Name="FK_EsCategories_EsCategories">
+          <End Type="EsStockDbModel.EsCategories" Role="EsCategories" Multiplicity="0..1" />
+          <End Type="EsStockDbModel.EsCategories" Role="EsCategories1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EsCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EsCategories1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -132,6 +196,21 @@
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="BrandId" ColumnName="BrandId" />
                 <ScalarProperty Name="OriginalId" ColumnName="OriginalId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EsCategories">
+            <EntityTypeMapping TypeName="EsStockDbModel.EsCategories">
+              <MappingFragment StoreEntitySet="EsCategories">
+                <ScalarProperty Name="LastModifierId" ColumnName="LastModifierId" />
+                <ScalarProperty Name="LastModificationDate" ColumnName="LastModificationDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="HCDCS" ColumnName="HCDCS" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

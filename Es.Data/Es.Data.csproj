@@ -39,7 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\TreeViewItemBaseModel.cs" />
     <Compile Include="Models\BrandModel.cs" />
+    <Compile Include="Models\EsCategoriesModel.cs" />
     <Compile Include="Models\EsMemberModel.cs" />
     <Compile Include="Models\EsProductModel.cs" />
     <Compile Include="Models\EsUserModel.cs" />

@@ -34,6 +34,7 @@ namespace Xceed.Wpf.AvalonDock.Controls
 {
     public abstract class LayoutFloatingWindowControl : Window, ILayoutControl
     {
+        public bool InternalCloseFlag { get { return _internalCloseFlag; } }
         static LayoutFloatingWindowControl()
         {
             LayoutFloatingWindowControl.ContentProperty.OverrideMetadata(typeof(LayoutFloatingWindowControl), new FrameworkPropertyMetadata(null, null, new CoerceValueCallback(CoerceContentValue)));

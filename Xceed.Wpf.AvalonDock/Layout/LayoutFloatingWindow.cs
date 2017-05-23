@@ -48,5 +48,10 @@ namespace Xceed.Wpf.AvalonDock.Layout
 
 
 
+
+        public void ConsoleDump(int p)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

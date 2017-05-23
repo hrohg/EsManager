@@ -59,6 +59,9 @@
     <Compile Include="Helpers\ManagerBase.cs" />
     <Compile Include="Helpers\SQLConnectionFactory.cs" />
     <Compile Include="Interfaces\IConnectionFactory.cs" />
+    <Compile Include="Models\EsCategories.cs">
+      <DependentUpon>EsStockDbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EsMembers.cs">
       <DependentUpon>EsStockDbModel.tt</DependentUpon>
     </Compile>
@@ -66,6 +69,7 @@
     <Compile Include="Models\ESSharedProducts.cs">
       <DependentUpon>EsStockDbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EsStockDbEntities.cs" />
     <Compile Include="Models\EsStockDbModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -3,7 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:enums="clr-namespace:ES.Manager.Enumerations"
-        Title="MainWindow" Height="350" Width="525">
+        xmlns:controls="clr-namespace:Xceed.Wpf.AvalonDock.ExtendedAvalonDock.Controls;assembly=Xceed.Wpf.AvalonDock"
+        xmlns:helpers="clr-namespace:Xceed.Wpf.AvalonDock.ExtendedAvalonDock.Helpers;assembly=Xceed.Wpf.AvalonDock"
+        xmlns:behaviors="clr-namespace:Xceed.Wpf.AvalonDock.ExtendedAvalonDock.Behaviors;assembly=Xceed.Wpf.AvalonDock"
+        Title="MainWindow" Height="350" Width="525" WindowState="Maximized">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -12,56 +18,78 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Menu>
-            <MenuItem Header="Data">
-                <MenuItem Header="Import shared products to xml" Command="{Binding ImportSharedProductsToXmlCommand}"></MenuItem>
-                    <MenuItem Header="Export shared products (xml)" Command="{Binding ExportSharedProductsToXmlCommand}" CommandParameter="{x:Static enums:ExportProductEnum.ExportSharedProductsEnum}"></MenuItem>
-                    <MenuItem Header="Export shared products to es product (xml)" Command="{Binding ExportSharedProductsToXmlCommand}" CommandParameter="{x:Static enums:ExportProductEnum.ExportSharedProductsToEsProductEnum}"></MenuItem>
-            </MenuItem>
-        </Menu>
+                <MenuItem Header="Data">
+                    <MenuItem Header="Shared Products">
+                        <MenuItem Header="Import shared products to xml" Command="{Binding ImportSharedProductsToXmlCommand}"></MenuItem>
+                        <MenuItem Header="Export shared products (xml)" Command="{Binding ExportSharedProductsToXmlCommand}" CommandParameter="{x:Static enums:ExportProductEnum.ExportSharedProductsEnum}"></MenuItem>
+                        <MenuItem Header="Export shared products to es product (xml)" Command="{Binding ExportSharedProductsToXmlCommand}" CommandParameter="{x:Static enums:ExportProductEnum.ExportSharedProductsToEsProductEnum}"></MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Manage ES Categories" Command="{Binding ManageEsCategoriesCommand}"></MenuItem>
+                </MenuItem>
+            </Menu>
         </Grid>
         <Grid Grid.Row="1">
-            <xcad:DockingManager>
-                <xcad:DockingManager.Theme><xcad:GenericTheme></xcad:GenericTheme></xcad:DockingManager.Theme>
+            <controls:ExtendedDockingManager Grid.Column="1" Grid.Row="0" x:Name="ExtendedDockingManager"
+                                             Width="Auto" 
+                                             DocumentsSource="{Binding Documents}"
+                                             AnchorablesSource="{Binding Tools}"
+                                             AllowMixedOrientation="True"
+                                             behaviors:AvalonDockLayoutSerializer.LoadLayoutCommand="{Binding ADLayout.LoadLayoutCommand}"
+                                             behaviors:AvalonDockLayoutSerializer.SaveLayoutCommand="{Binding ADLayout.SaveLayoutCommand}">
+                <controls:ExtendedDockingManager.Resources>
+
+                </controls:ExtendedDockingManager.Resources>
+                <controls:ExtendedDockingManager.LayoutUpdateStrategy>
+                    <helpers:LayoutUpdateStrategy />
+                </controls:ExtendedDockingManager.LayoutUpdateStrategy>
+
+                
+                <controls:ExtendedDockingManager.LayoutItemContainerStyle>
+                    <Style TargetType="{x:Type xcad:LayoutItem}">
+                        <Setter Property="Title" Value="{Binding Model.Title}" />
+                        <Setter Property="ToolTip" Value="{Binding Model.Description}"/>
+                        <Setter Property="CloseCommand" Value="{Binding Model.CloseCommand}" />
+                        <Setter Property="CanClose" Value="{Binding Model.CanClose, Mode=TwoWay}" />
+                        <Setter Property="CanFloat" Value="{Binding Model.CanFloat, Mode=TwoWay}"/>
+                        <Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay}" />
+                        <Setter Property="IsActive" Value="{Binding Model.IsActive, Mode=TwoWay}"/>
+                    </Style>
+                </controls:ExtendedDockingManager.LayoutItemContainerStyle>
+
                 <xcad:LayoutRoot>
-                    <xcad:LayoutPanel>
-                        <xcad:LayoutAnchorablePane>
-                            <xcad:LayoutAnchorable>
-                                <ListBox>
-                                    <ListBoxItem Content="Tool1"/>
-                                    <ListBoxItem Content="Tool2"/>
-                                    <ListBoxItem Content="Tool3"/>
-                                </ListBox>
-                            </xcad:LayoutAnchorable>
-                        </xcad:LayoutAnchorablePane>
-                        <xcad:LayoutPanel>
-                            
+                    <xcad:LayoutPanel Orientation="Horizontal">
+                        <xcad:LayoutAnchorablePaneGroup Orientation="Horizontal" DockWidth="250">
+                            <xcad:LayoutAnchorablePane Name="LeftPane">
+                                <controls:ExtendedLayoutAnchorable AutoHideMinWidth="250" AutoHideWidth="250">
+                                </controls:ExtendedLayoutAnchorable>
+                            </xcad:LayoutAnchorablePane>
+                        </xcad:LayoutAnchorablePaneGroup>
+                        <xcad:LayoutPanel Orientation="Vertical">
+                            <xcad:LayoutAnchorablePaneGroup DockHeight="150">
+                                <xcad:LayoutAnchorablePane Name="TopPane">
+                                    <controls:ExtendedLayoutAnchorable AutoHideMinHeight="150" AutoHideHeight="200"/>
+                                </xcad:LayoutAnchorablePane>
+                            </xcad:LayoutAnchorablePaneGroup>
+                            <xcad:LayoutDocumentPane/>
+                            <xcad:LayoutAnchorablePaneGroup DockHeight="150">
+                                <xcad:LayoutAnchorablePane>
+                                    <controls:ExtendedLayoutAnchorable AutoHideMinHeight="150" AutoHideHeight="200"/>
+                                </xcad:LayoutAnchorablePane>
+                            </xcad:LayoutAnchorablePaneGroup>
                         </xcad:LayoutPanel>
+                        <xcad:LayoutAnchorablePaneGroup DockWidth="250">
+                            <xcad:LayoutAnchorablePane Name="RightPane" FloatingWidth="250">
+                                <controls:ExtendedLayoutAnchorable AutoHideMinWidth="250" AutoHideWidth="250"/>
+                            </xcad:LayoutAnchorablePane>
+                        </xcad:LayoutAnchorablePaneGroup>
                     </xcad:LayoutPanel>
-                    <xcad:LayoutRoot.LeftSide>
-                        <xcad:LayoutAnchorSide>
-                            <xcad:LayoutAnchorGroup>
-                                <xcad:LayoutAnchorable Title="AAA" CanFloat="True">
-                                    <ListBox>
-                                        <ListBoxItem Content="Tool1"/>
-                                        <ListBoxItem Content="Tool2"/>
-                                        <ListBoxItem Content="Tool3"/>
-                                    </ListBox>
-                                </xcad:LayoutAnchorable>
-                                <xcad:LayoutAnchorable Title="BBB" CanFloat="False">
-                                    <ListBox>
-                                        <ListBoxItem Content="Tool1"/>
-                                        <ListBoxItem Content="Tool2"/>
-                                        <ListBoxItem Content="Tool3"/>
-                                    </ListBox>
-                                </xcad:LayoutAnchorable>
-                            </xcad:LayoutAnchorGroup>
-                        </xcad:LayoutAnchorSide>
-                    </xcad:LayoutRoot.LeftSide>
                 </xcad:LayoutRoot>
-            </xcad:DockingManager>           
-            
+
+
+            </controls:ExtendedDockingManager>
+
         </Grid>
         <Grid Grid.Row="2"></Grid>
-        
+
     </Grid>
 </Window>

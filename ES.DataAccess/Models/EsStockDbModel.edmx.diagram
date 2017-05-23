@@ -7,6 +7,8 @@
       <Diagram DiagramId="c25c84effdfa42cdab108b707507e2ac" Name="Diagram1">
         <EntityTypeShape EntityType="EsStockDbModel.EsMembers" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EsStockDbModel.ESSharedProducts" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EsStockDbModel.EsCategories" Width="1.5" PointX="0.75" PointY="3.75" />
+        <AssociationConnector Association="EsStockDbModel.FK_EsCategories_EsCategories" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

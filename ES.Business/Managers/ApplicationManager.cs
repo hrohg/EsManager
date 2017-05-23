@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Core.EntityClient;
 using System.Data.SqlClient;
+using Es.Data.Models;
 using ES.Business.Models;
 
 namespace ES.Business.Managers
@@ -9,13 +10,12 @@ namespace ES.Business.Managers
     public class ApplicationManager
     {
         #region Internal properties
-        //private static EsMemberModel _member = new EsMemberModel();
         //private static EsMembersAccountsModel _membersAccounts;
-        //private static EsUserModel _esUser = new EsUserModel();
+        private EsUserModel _esUser = new EsUserModel();
         //private static List<MembersRoles> _userRoles;
         //private static LocalManager _cashManager;
         //private static bool _localMode = false;
-        private static string _connectionString;
+        private string _connectionString;
         //private static List<ScaleModel> _weighers;
         //private static MessageManager _messageManager;
         private static bool _isEcrActivated;
@@ -58,9 +58,10 @@ namespace ES.Business.Managers
 
             return entityConnectionStringBuilder.ConnectionString;
         }
+
         #region External properties
         public static bool IsEsServer { get; private set; }
-        //public static EsMemberModel GetEsMember { get { return _member; } }
+        public static EsUserModel EsUser { get { return Instance._esUser; } }
 
         //public static EsMembersAccountsModel GetEsMembersAccounts
         //{
@@ -74,19 +75,9 @@ namespace ES.Business.Managers
         //    }
         //}
 
-        //public static EsMemberModel SetEsMember
-        //{
-        //    set
-        //    {
-        //        _member = value;
-        //        UserRoles = UsersManager.GetUserRoles(GetEsUser.UserId, GetEsMember.Id);
-        //        ResetMemberData();
-        //    }
-        //}
-
         //public static List<MembersRoles> UserRoles { get { return _userRoles; } private set { _userRoles = value; } }
-        //public static EsUserModel GetEsUser { get { return _esUser; } }
-        //public static EsUserModel SetEsUser { set { _esUser = value; } }
+
+        public EsUserModel SetEsUser { set { _esUser = value; } }
         public static string DefaultConnectionString
         {
             get
@@ -358,7 +349,7 @@ namespace ES.Business.Managers
             // Initialize the connection string builder for the
             // underlying provider.
         }
-        public static string ConnectionString { get { return _connectionString; } set { _connectionString = value; } }
+        public static string ConnectionString { get { return Instance._connectionString; } set { Instance._connectionString = value; } }
         //public static bool LocalMode { get { return _localMode; } set { _localMode = value; } }
         //public static LocalManager CashManager
         //{
@@ -383,6 +374,11 @@ namespace ES.Business.Managers
         //}
 
         #endregion
+        private static ApplicationManager _insatance;
+        public static ApplicationManager Instance
+        {
+            get { return _insatance ?? (_insatance = new ApplicationManager()); }
+        }
         public ApplicationManager()
         {
 
@@ -419,6 +415,12 @@ namespace ES.Business.Managers
         //    }
         //}
 
+        #region External methods
+        public static void Initialize(EsUserModel user)
+        {
+            Instance._esUser = user;
+        }
+        #endregion External methods
         #endregion
     }
 

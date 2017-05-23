@@ -108,6 +108,31 @@
     <Compile Include="Converters\UriSourceToBitmapImageConverter.cs" />
     <Compile Include="DocumentClosedEventArgs.cs" />
     <Compile Include="DocumentClosingEventArgs.cs" />
+    <Compile Include="ExtendedAvalonDock\Behaviors\AvalonDockLayoutSerializer.cs" />
+    <Compile Include="ExtendedAvalonDock\Behaviors\ExtendedWindowStylesBehavior.cs" />
+    <Compile Include="ExtendedAvalonDock\Controls\RootVersion.cs" />
+    <Compile Include="ExtendedAvalonDock\Helpers\AutobinderLayoutSelector.cs" />
+    <Compile Include="ExtendedAvalonDock\Helpers\AutobinderTemplateSelector .cs" />
+    <Compile Include="ExtendedAvalonDock\Helpers\LayoutUpdateStrategy.cs" />
+    <Compile Include="ExtendedAvalonDock\Behaviors\PaneControlSelectionItemBehavior.cs" />
+    <Compile Include="ExtendedAvalonDock\Behaviors\WindowInputBindingBehavior.cs" />
+    <Compile Include="ExtendedAvalonDock\Controls\DockingManagerBase.cs" />
+    <Compile Include="ExtendedAvalonDock\Controls\ExtendedLayoutBorders.cs" />
+    <Compile Include="ExtendedAvalonDock\Controls\ExtendedAnchorablePaneTabPanel.cs" />
+    <Compile Include="ExtendedAvalonDock\Controls\ExtendedDockingManager.cs" />
+    <Compile Include="ExtendedAvalonDock\Controls\ExtendedLayoutAnchorable.cs" />
+    <Compile Include="ExtendedAvalonDock\Controls\ExtendedLayoutAnchorablePane.cs" />
+    <Compile Include="ExtendedAvalonDock\Controls\ExtendedLayoutContentPresenter.cs" />
+    <Compile Include="ExtendedAvalonDock\Controls\ExtendedLayoutDocumentPane.cs" />
+    <Compile Include="ExtendedAvalonDock\Controls\ExtendedLayoutDocumentPaneGroup.cs" />
+    <Compile Include="ExtendedAvalonDock\Controls\ExtendedLayoutPanel.cs" />
+    <Compile Include="ExtendedAvalonDock\Controls\ExtendedLayoutRoot.cs" />
+    <Compile Include="ExtendedAvalonDock\Helpers\Extentions.cs" />
+    <Compile Include="ExtendedAvalonDock\Helpers\VisualTreeHelper.cs" />
+    <Compile Include="ExtendedAvalonDock\Interfaces\IDockDocument.cs" />
+    <Compile Include="ExtendedAvalonDock\Interfaces\IDockToolBar.cs" />
+    <Compile Include="ExtendedAvalonDock\Interfaces\IExtendedAnchorableBase.cs" />
+    <Compile Include="ExtendedAvalonDock\Interfaces\IExtendedLayoutUpdateStrategy.cs" />
     <Compile Include="Extentions.cs" />
     <Compile Include="LayoutEventArgs.cs" />
     <Compile Include="Layout\AnchorableShowStrategy.cs" />
@@ -344,6 +369,14 @@
     <Resource Include="Themes\Generic\Images\PinRestore.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ExtendedAvalonDock\Resource\AvalonDockStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExtendedAvalonDock\Resource\LayoutAnchorableContentStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,21 +8,31 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Es.Data.Models;
-using ES.Common.Helper;
+using ES.Common.ViewModels;
 using ES.Business.Managers;
 using ES.DataAccess.Models;
 using ES.Manager.Enumerations;
+using ES.Manager.ViewModels.Managers;
+using Xceed.Wpf.AvalonDock;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
 namespace ES.Manager.ViewModels
 {
-    public class ShellViewModel
+    public class ShellViewModel : ViewModelBase
     {
+        #region External properties
+        #region Avalon dock
+        public ObservableCollection<DocumentViewModel> Documents { get; set; }
+        public ObservableCollection<PaneViewModel> Tools { get; set; }
+        #endregion Avalon dock
+        #endregion External properties
+
         #region Contructors
 
         public ShellViewModel()
         {
             Initialize();
+            ApplicationManager.Instance.SetEsUser = new EsUserModel { UserId = 1 };
         }
         #endregion
 
@@ -29,9 +40,31 @@ namespace ES.Manager.ViewModels
 
         private void Initialize()
         {
+            Documents = new ObservableCollection<DocumentViewModel>();
+            Tools = new ObservableCollection<PaneViewModel>();
             ImportSharedProductsToXmlCommand = new RelayCommand(OnImportSharedProductsToXml);
             ExportSharedProductsToXmlCommand = new RelayCommand<ExportProductEnum>(OnExportSharedProductsToXml);
+            ManageEsCategoriesCommand = new RelayCommand(OnManageEsCategories);
         }
+
+        private void AddDocument(DocumentViewModel vm)
+        {
+            if (vm.IsClosable)
+            {
+                vm.OnClosed += OnRemoveDocument;
+            }
+            vm.IsActive = true;
+            vm.IsSelected = true;
+            vm.Id = Guid.NewGuid();
+            Documents.Add(vm);
+        }
+        private void OnRemoveDocument(PaneViewModel vm)
+        {
+            if (vm == null) return;
+            vm.OnClosed -= OnRemoveDocument;
+            Documents.Remove((DocumentViewModel)vm);
+        }
+
         private void OnImportSharedProductsToXml(object o)
         {
             var products = ProductsManager.GetEsSharedProductses();
@@ -43,7 +76,7 @@ namespace ES.Manager.ViewModels
             {
                 return;
             }
-            var data = XmlHelper.Read(filePath.FileName, typeof (List<ESSharedProducts>));
+            var data = XmlHelper.Read(filePath.FileName, typeof(List<ESSharedProducts>));
         }
         private void OnExportSharedProductsToXml(ExportProductEnum exportProductEnum)
         {
@@ -84,10 +117,14 @@ namespace ES.Manager.ViewModels
                 default:
                     throw new ArgumentOutOfRangeException("exportProductEnum", exportProductEnum, null);
             }
-            
-            
+
+
         }
 
+        private void OnManageEsCategories(object o)
+        {
+            AddDocument(new EsCategoriesViewModel());
+        }
         #endregion
 
         #region External methods
@@ -98,7 +135,7 @@ namespace ES.Manager.ViewModels
 
         public ICommand ImportSharedProductsToXmlCommand { get; private set; }
         public ICommand ExportSharedProductsToXmlCommand { get; private set; }
-
+        public ICommand ManageEsCategoriesCommand { get; private set; }
         #endregion
     }
 }
