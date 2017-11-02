@@ -114,7 +114,8 @@ namespace Es.Data.Models
             get { return _lastActivityDate; }
             set { _lastActivityDate = value; }
         }
-
+        
+        public bool IsClearPassword { get; set; }
         #endregion
         /// <summary>
         /// EsUserModel Constructors

@@ -12,19 +12,63 @@ using ES.Common.ViewModels;
 using ES.Business.Managers;
 using ES.DataAccess.Models;
 using ES.Manager.Enumerations;
+using ES.Manager.Interfaces;
+using ES.Manager.Models;
 using ES.Manager.ViewModels.Managers;
 using Xceed.Wpf.AvalonDock;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
 namespace ES.Manager.ViewModels
 {
-    public class ShellViewModel : ViewModelBase
+    public class ShellViewModel : ViewModelBase, IShellViewModel, IDisposable
     {
+        #region Events
+        public delegate void LogOutDelegate();
+        public event LogOutDelegate OnLogOut;
+        #endregion Events
+
+        #region Private properties
+        private bool _isLoading;
+        private ObservableCollection<MessageModel> _messages = new ObservableCollection<MessageModel>();
+        private DocumentViewModel _activeTab;
+
+        #endregion Private properties
+
+
         #region External properties
+
         #region Avalon dock
         public ObservableCollection<DocumentViewModel> Documents { get; set; }
         public ObservableCollection<PaneViewModel> Tools { get; set; }
         #endregion Avalon dock
+
+        public bool IsLoading
+        {
+            get
+            {
+                return _isLoading;
+            }
+            set
+            {
+                if (_isLoading == value)
+                {
+                    return;
+                }
+                _isLoading = value;
+                RaisePropertyChanged("IsLoading");
+            }
+        }
+        public ObservableCollection<MessageModel> Messages { get { return new ObservableCollection<MessageModel>(_messages.OrderByDescending(s => s.Date)); } set { _messages = value; RaisePropertyChanged("Messages"); RaisePropertyChanged("Message"); } }
+
+        public DocumentViewModel ActiveTab
+        {
+            get { return _activeTab; }
+            set
+            {
+                _activeTab = value;
+                RaisePropertyChanged("AddSingleVisibility");
+            }
+        }
         #endregion External properties
 
         #region Contructors
@@ -46,8 +90,20 @@ namespace ES.Manager.ViewModels
             ExportSharedProductsToXmlCommand = new RelayCommand<ExportProductEnum>(OnExportSharedProductsToXml);
             ManageEsCategoriesCommand = new RelayCommand(OnManageEsCategories);
         }
-
-        private void AddDocument(DocumentViewModel vm)
+        private void OnAddDocument<T>(DocumentViewModel vm, bool allowDoublicate = true)
+        {
+            var exDocument = Documents.FirstOrDefault(s => s is T);
+            if (!allowDoublicate && exDocument != null)
+            {
+                //todo: Activate document
+                exDocument.IsActive = true;
+                exDocument.IsSelected = true;
+                return;
+            }
+            OnAddDocument(vm);
+        }
+        
+        private void OnAddDocument(DocumentViewModel vm)
         {
             if (vm.IsClosable)
             {
@@ -123,12 +179,15 @@ namespace ES.Manager.ViewModels
 
         private void OnManageEsCategories(object o)
         {
-            AddDocument(new EsCategoriesViewModel());
+            OnAddDocument(new EsCategoriesViewModel());
         }
         #endregion
 
         #region External methods
+        public void Dispose()
+        {
 
+        }
         #endregion
 
         #region Commands
@@ -136,6 +195,23 @@ namespace ES.Manager.ViewModels
         public ICommand ImportSharedProductsToXmlCommand { get; private set; }
         public ICommand ExportSharedProductsToXmlCommand { get; private set; }
         public ICommand ManageEsCategoriesCommand { get; private set; }
+
+        #region ES Market
+        private ICommand _manageEsMarketMembersCommand;
+        public ICommand ManageEsMarketMembersCommand { get { return _manageEsMarketMembersCommand ?? (_manageEsMarketMembersCommand = new RelayCommand(OnManageEsMarketMembers)); } }
+        private void OnManageEsMarketMembers(object obj)
+        {
+            OnAddDocument<ManageEsMembersViewModel>(new ManageEsMembersViewModel(), false);
+        }
+
+        private ICommand _manageEsMarketUsersCommand;
+        public ICommand ManageEsMarketUsersCommand { get { return _manageEsMarketUsersCommand ?? (_manageEsMarketUsersCommand = new RelayCommand(OnManageEsMarketUsers)); } }
+        private void OnManageEsMarketUsers(object obj)
+        {
+            OnAddDocument<ManageUsersViewModel>(new ManageUsersViewModel(), false);
+        }
+        #endregion ES Market
+
         #endregion
     }
 }

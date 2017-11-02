@@ -85,6 +85,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EsStockDbModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\EsUsers.cs">
+      <DependentUpon>EsStockDbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

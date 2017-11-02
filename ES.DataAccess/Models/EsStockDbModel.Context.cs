@@ -28,5 +28,6 @@ namespace ES.DataAccess.Models
         public virtual DbSet<EsMembers> EsMembers { get; set; }
         public virtual DbSet<ESSharedProducts> ESSharedProducts { get; set; }
         public virtual DbSet<EsCategories> EsCategories { get; set; }
+        public virtual DbSet<EsUsers> EsUsers { get; set; }
     }
 }

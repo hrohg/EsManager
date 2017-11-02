@@ -61,6 +61,7 @@
     <Compile Include="Managers\ApplicationManager.cs" />
     <Compile Include="Managers\MembersManager.cs" />
     <Compile Include="Managers\ProductsManager.cs" />
+    <Compile Include="Managers\UsersManager.cs" />
     <Compile Include="Models\DataServerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

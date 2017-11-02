@@ -9,6 +9,7 @@
         <EntityTypeShape EntityType="EsStockDbModel.ESSharedProducts" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="EsStockDbModel.EsCategories" Width="1.5" PointX="0.75" PointY="3.75" />
         <AssociationConnector Association="EsStockDbModel.FK_EsCategories_EsCategories" />
+        <EntityTypeShape EntityType="EsStockDbModel.EsUsers" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

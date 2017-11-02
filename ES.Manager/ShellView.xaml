@@ -26,6 +26,10 @@
                     </MenuItem>
                     <MenuItem Header="Manage ES Categories" Command="{Binding ManageEsCategoriesCommand}"></MenuItem>
                 </MenuItem>
+                <MenuItem Header="ES Market">
+                    <MenuItem Header="Կազմակերպությունների խմբագրում" Command="{Binding ManageEsMarketMembersCommand}"/>
+                    <MenuItem Header="Օգտագործողների խմբագրում" Command="{Binding ManageEsMarketUsersCommand}"/>
+                </MenuItem>
             </Menu>
         </Grid>
         <Grid Grid.Row="1">
@@ -87,7 +91,6 @@
 
 
             </controls:ExtendedDockingManager>
-
         </Grid>
         <Grid Grid.Row="2"></Grid>
 

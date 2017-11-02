@@ -84,7 +84,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Enumerations\ExportProductEnum.cs" />
+    <Compile Include="Enumerations\MessageEnums.cs" />
+    <Compile Include="Helper\FocusNextElementBehaviors.cs" />
+    <Compile Include="Helper\PasswordBoxBindingBehavior.cs" />
+    <Compile Include="Interfaces\IShellViewModel.cs" />
+    <Compile Include="Models\MessageModel.cs" />
     <Compile Include="ViewModels\Managers\EsCategoriesViewModel.cs" />
+    <Compile Include="ViewModels\Managers\ManageEsMembersViewModel.cs" />
+    <Compile Include="ViewModels\Managers\ManageUsersViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Page Include="ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -105,6 +112,14 @@
     <Page Include="Views\Managers\EsCategoriesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Managers\ManageMembersTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Managers\ManageUsersTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

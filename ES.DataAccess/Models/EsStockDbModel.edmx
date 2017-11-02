@@ -56,6 +56,19 @@
           <Property Name="IsEnable" Type="bit" />
           <Property Name="IsChecked" Type="bit" />
         </EntityType>
+        <EntityType Name="EsUsers">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="LastActivityDate" Type="datetime" Nullable="false" />
+          <Property Name="ClubSixteenId" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
         <Association Name="FK_EsCategories_EsCategories">
           <End Role="EsCategories" Type="Self.EsCategories" Multiplicity="0..1" />
           <End Role="EsCategories1" Type="Self.EsCategories" Multiplicity="*" />
@@ -72,6 +85,7 @@
           <EntitySet Name="EsCategories" EntityType="Self.EsCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EsMembers" EntityType="Self.EsMembers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ESSharedProducts" EntityType="Self.ESSharedProducts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EsUsers" EntityType="Self.EsUsers" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_EsCategories_EsCategories" Association="Self.FK_EsCategories_EsCategories">
             <End Role="EsCategories" EntitySet="EsCategories" />
             <End Role="EsCategories1" EntitySet="EsCategories" />
@@ -98,6 +112,7 @@
             <End Role="EsCategories" EntitySet="EsCategories" />
             <End Role="EsCategories1" EntitySet="EsCategories" />
           </AssociationSet>
+          <EntitySet Name="EsUsers" EntityType="EsStockDbModel.EsUsers" />
         </EntityContainer>
         <EntityType Name="ESSharedProducts">
           <Key>
@@ -155,6 +170,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="EsUsers">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="LastActivityDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ClubSixteenId" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -212,6 +240,20 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EsUsers">
+            <EntityTypeMapping TypeName="EsStockDbModel.EsUsers">
+              <MappingFragment StoreEntitySet="EsUsers">
+                <ScalarProperty Name="ClubSixteenId" ColumnName="ClubSixteenId" />
+                <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
