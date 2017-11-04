@@ -45,6 +45,9 @@
     <Compile Include="Models\EsMemberModel.cs" />
     <Compile Include="Models\EsProductModel.cs" />
     <Compile Include="Models\EsUserModel.cs" />
+    <Compile Include="Models\MemberRoleModel.cs" />
+    <Compile Include="Models\MemberUsersRolesModel.cs" />
+    <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\ProductCategoriesModel.cs" />
     <Compile Include="Models\ProductGroupModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

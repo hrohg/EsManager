@@ -26,12 +26,12 @@ namespace ES.Manager.ViewModels.Managers
 
         #region Users
         private List<EsUserModel> _esUsers;
-        public ObservableCollection<EsUserModel> EsUsers
+        public List<EsUserModel> EsUsers
         {
             get
             {
-                return new ObservableCollection<EsUserModel>(_esUsers != null ?
-                    _esUsers.Where(s => string.IsNullOrEmpty(UsersFilter) || s.FullName.ToLower().Contains(UsersFilter.ToLower())).OrderBy(s => s.FullName).ToList() : new List<EsUserModel>());
+                return _esUsers != null ?
+                    _esUsers.Where(s => string.IsNullOrEmpty(UsersFilter) || s.FullName.ToLower().Contains(UsersFilter.ToLower()) || s.Email.ToLower().Contains(UsersFilter.ToLower())).OrderBy(s => s.FullName).ToList() : new List<EsUserModel>();
             }
             set
             {
@@ -123,7 +123,7 @@ namespace ES.Manager.ViewModels.Managers
         private void Load()
         {
             SelectedEsUser = null;
-            EsUsers = new ObservableCollection<EsUserModel>(UsersManager.GetEsUsers());
+            EsUsers = UsersManager.GetEsUsers();
         }
 
 
@@ -160,7 +160,8 @@ namespace ES.Manager.ViewModels.Managers
             {
                 if (UsersManager.EditUser(SelectedEsUser))
                 {
-                    SelectedEsUser = new EsUserModel();
+                    SelectedEsUser = null;
+                    EsUsers = UsersManager.GetEsUsers();
                 }
                 else
                 {

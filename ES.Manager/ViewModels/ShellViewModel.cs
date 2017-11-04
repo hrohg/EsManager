@@ -201,7 +201,7 @@ namespace ES.Manager.ViewModels
         public ICommand ManageEsMarketMembersCommand { get { return _manageEsMarketMembersCommand ?? (_manageEsMarketMembersCommand = new RelayCommand(OnManageEsMarketMembers)); } }
         private void OnManageEsMarketMembers(object obj)
         {
-            OnAddDocument<ManageEsMembersViewModel>(new ManageEsMembersViewModel(), false);
+            OnAddDocument<ManageMembersViewModel>(new ManageMembersViewModel(), false);
         }
 
         private ICommand _manageEsMarketUsersCommand;

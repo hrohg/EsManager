@@ -88,6 +88,12 @@
     <Compile Include="Models\EsUsers.cs">
       <DependentUpon>EsStockDbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MembersRoles.cs">
+      <DependentUpon>EsStockDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MemberUsersRoles.cs">
+      <DependentUpon>EsStockDbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

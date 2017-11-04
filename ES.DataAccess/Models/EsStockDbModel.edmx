@@ -69,6 +69,23 @@
           <Property Name="LastActivityDate" Type="datetime" Nullable="false" />
           <Property Name="ClubSixteenId" Type="nvarchar" MaxLength="25" Nullable="false" />
         </EntityType>
+        <EntityType Name="MembersRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="MemberUsersRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MemberRoleId" Type="bigint" Nullable="false" />
+          <Property Name="EsUserId" Type="bigint" Nullable="false" />
+          <Property Name="MemberId" Type="bigint" Nullable="false" />
+        </EntityType>
         <Association Name="FK_EsCategories_EsCategories">
           <End Role="EsCategories" Type="Self.EsCategories" Multiplicity="0..1" />
           <End Role="EsCategories1" Type="Self.EsCategories" Multiplicity="*" />
@@ -81,14 +98,64 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MemberUsersRoles_EsMembers">
+          <End Role="EsMembers" Type="Self.EsMembers" Multiplicity="1" />
+          <End Role="MemberUsersRoles" Type="Self.MemberUsersRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EsMembers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MemberUsersRoles">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberUsersRoles_EsUsers">
+          <End Role="EsUsers" Type="Self.EsUsers" Multiplicity="1" />
+          <End Role="MemberUsersRoles" Type="Self.MemberUsersRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EsUsers">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="MemberUsersRoles">
+              <PropertyRef Name="EsUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberUsersRoles_MembersRoles">
+          <End Role="MembersRoles" Type="Self.MembersRoles" Multiplicity="1" />
+          <End Role="MemberUsersRoles" Type="Self.MemberUsersRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MembersRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MemberUsersRoles">
+              <PropertyRef Name="MemberRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="EsStockDbModelStoreContainer">
           <EntitySet Name="EsCategories" EntityType="Self.EsCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EsMembers" EntityType="Self.EsMembers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ESSharedProducts" EntityType="Self.ESSharedProducts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EsUsers" EntityType="Self.EsUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MembersRoles" EntityType="Self.MembersRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemberUsersRoles" EntityType="Self.MemberUsersRoles" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_EsCategories_EsCategories" Association="Self.FK_EsCategories_EsCategories">
             <End Role="EsCategories" EntitySet="EsCategories" />
             <End Role="EsCategories1" EntitySet="EsCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberUsersRoles_EsMembers" Association="Self.FK_MemberUsersRoles_EsMembers">
+            <End Role="EsMembers" EntitySet="EsMembers" />
+            <End Role="MemberUsersRoles" EntitySet="MemberUsersRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberUsersRoles_EsUsers" Association="Self.FK_MemberUsersRoles_EsUsers">
+            <End Role="EsUsers" EntitySet="EsUsers" />
+            <End Role="MemberUsersRoles" EntitySet="MemberUsersRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberUsersRoles_MembersRoles" Association="Self.FK_MemberUsersRoles_MembersRoles">
+            <End Role="MembersRoles" EntitySet="MembersRoles" />
+            <End Role="MemberUsersRoles" EntitySet="MemberUsersRoles" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -103,6 +170,7 @@
           <Property Name="FullName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ClubSixteenId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MemberUsersRoles" Relationship="EsStockDbModel.FK_MemberUsersRoles_EsMembers" FromRole="EsMembers" ToRole="MemberUsersRoles" />
         </EntityType>
         <EntityContainer Name="EsStockDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="EsMembers" EntityType="Self.EsMembers" />
@@ -113,6 +181,20 @@
             <End Role="EsCategories1" EntitySet="EsCategories" />
           </AssociationSet>
           <EntitySet Name="EsUsers" EntityType="EsStockDbModel.EsUsers" />
+          <EntitySet Name="MemberUsersRoles" EntityType="EsStockDbModel.MemberUsersRoles" />
+          <AssociationSet Name="FK_MemberUsersRoles_EsMembers" Association="EsStockDbModel.FK_MemberUsersRoles_EsMembers">
+            <End Role="EsMembers" EntitySet="EsMembers" />
+            <End Role="MemberUsersRoles" EntitySet="MemberUsersRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberUsersRoles_EsUsers" Association="EsStockDbModel.FK_MemberUsersRoles_EsUsers">
+            <End Role="EsUsers" EntitySet="EsUsers" />
+            <End Role="MemberUsersRoles" EntitySet="MemberUsersRoles" />
+          </AssociationSet>
+          <EntitySet Name="MembersRoles" EntityType="EsStockDbModel.MembersRoles" />
+          <AssociationSet Name="FK_MemberUsersRoles_MembersRoles" Association="EsStockDbModel.FK_MemberUsersRoles_MembersRoles">
+            <End Role="MembersRoles" EntitySet="MembersRoles" />
+            <End Role="MemberUsersRoles" EntitySet="MemberUsersRoles" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ESSharedProducts">
           <Key>
@@ -182,7 +264,65 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="LastActivityDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ClubSixteenId" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MemberUsersRoles" Relationship="EsStockDbModel.FK_MemberUsersRoles_EsUsers" FromRole="EsUsers" ToRole="MemberUsersRoles" />
         </EntityType>
+        <EntityType Name="MemberUsersRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="MemberRoleId" Type="Int64" Nullable="false" />
+          <Property Name="EsUserId" Type="Int64" Nullable="false" />
+          <Property Name="MemberId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="EsMembers" Relationship="EsStockDbModel.FK_MemberUsersRoles_EsMembers" FromRole="MemberUsersRoles" ToRole="EsMembers" />
+          <NavigationProperty Name="EsUsers" Relationship="EsStockDbModel.FK_MemberUsersRoles_EsUsers" FromRole="MemberUsersRoles" ToRole="EsUsers" />
+          <NavigationProperty Name="MembersRoles" Relationship="EsStockDbModel.FK_MemberUsersRoles_MembersRoles" FromRole="MemberUsersRoles" ToRole="MembersRoles" />
+        </EntityType>
+        <Association Name="FK_MemberUsersRoles_EsMembers">
+          <End Type="EsStockDbModel.EsMembers" Role="EsMembers" Multiplicity="1" />
+          <End Type="EsStockDbModel.MemberUsersRoles" Role="MemberUsersRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EsMembers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MemberUsersRoles">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberUsersRoles_EsUsers">
+          <End Type="EsStockDbModel.EsUsers" Role="EsUsers" Multiplicity="1" />
+          <End Type="EsStockDbModel.MemberUsersRoles" Role="MemberUsersRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EsUsers">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="MemberUsersRoles">
+              <PropertyRef Name="EsUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MembersRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MemberUsersRoles" Relationship="EsStockDbModel.FK_MemberUsersRoles_MembersRoles" FromRole="MembersRoles" ToRole="MemberUsersRoles" />
+        </EntityType>
+        <Association Name="FK_MemberUsersRoles_MembersRoles">
+          <End Type="EsStockDbModel.MembersRoles" Role="MembersRoles" Multiplicity="1" />
+          <End Type="EsStockDbModel.MemberUsersRoles" Role="MemberUsersRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MembersRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MemberUsersRoles">
+              <PropertyRef Name="MemberRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -254,6 +394,25 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberUsersRoles">
+            <EntityTypeMapping TypeName="EsStockDbModel.MemberUsersRoles">
+              <MappingFragment StoreEntitySet="MemberUsersRoles">
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="EsUserId" ColumnName="EsUserId" />
+                <ScalarProperty Name="MemberRoleId" ColumnName="MemberRoleId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MembersRoles">
+            <EntityTypeMapping TypeName="EsStockDbModel.MembersRoles">
+              <MappingFragment StoreEntitySet="MembersRoles">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

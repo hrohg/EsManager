@@ -11,14 +11,13 @@
 
     <DataTemplate DataType="{x:Type settings:ManageUsersViewModel}">
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*" MinHeight="150"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <GroupBox Grid.Row="1" Header="Օգտագործողներ">
-                <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="150"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="*" MinWidth="150"/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Grid.Column="0" Header="Օգտագործողներ">
+                <Grid Margin="5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
@@ -33,16 +32,15 @@
                     </ListView>
                 </Grid>
             </GroupBox>
-            <GroupBox Grid.Row="2" Header="Օգտագործող" IsEnabled="{Binding IsEnabledEditMode}">
-                <Grid IsSharedSizeScope="True">
+            <GridSplitter Grid.Column="1" Width="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0 10"/>
+            <GroupBox Grid.Column="2" Header="Օգտագործող">
+                <Grid IsSharedSizeScope="True" Margin="5">
                     <Grid.Resources>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                             <Setter Property="HorizontalAlignment" Value="Right"/>
                         </Style>
                     </Grid.Resources>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" SharedSizeGroup="DescriptionColumn"/>
-                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto" SharedSizeGroup="DescriptionColumn"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
@@ -52,41 +50,48 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="Անվանում:"/>
-                    <TextBox  Grid.Column="1" Grid.Row="0" Text="{Binding SelectedEsUser.UserName, UpdateSourceTrigger=PropertyChanged}" Margin="1"/>
-                    <TextBlock Grid.Column="2" Grid.Row="0" Text="Էլ փոստ:"/>
-                    <TextBox Grid.Column="3" Grid.Row="0" Text="{Binding SelectedEsUser.Email, UpdateSourceTrigger=PropertyChanged}" Margin="1"/>
+                    <TextBox  Grid.Column="1" Grid.Row="0" Text="{Binding SelectedEsUser.UserName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsEnabledEditMode}" Margin="3 1 1 1"/>
+                    
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Էլ փոստ:"/>
+                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SelectedEsUser.Email, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsEnabledEditMode}" Margin="3 1 1 1"/>
 
-                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Հեռախոս:"/>
-                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SelectedEsUser.Mobile, UpdateSourceTrigger=PropertyChanged}" Margin="1"/>
-                    <TextBlock Grid.Column="2" Grid.Row="1" Text="ClubSixteenId:"/>
-                    <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SelectedEsUser.ClubSixteenId, UpdateSourceTrigger=PropertyChanged}" Margin="1"/>
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Հեռախոս:"/>
+                    <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SelectedEsUser.Mobile, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsEnabledEditMode}" Margin="3 1 1 1"/>
+                    
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="ClubSixteenId:"/>
+                    <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding SelectedEsUser.ClubSixteenId, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsEnabledEditMode}" Margin="3 1 1 1"/>
 
-                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Գաղտնաբառ:"/>
-                    <PasswordBox Grid.Column="1" Grid.Row="2" Margin="1">
+                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Գաղտնաբառ:"/>
+                    <PasswordBox Grid.Column="1" Grid.Row="4" Margin="3 1 1 1" IsEnabled="{Binding IsEnabledEditMode}">
                         <i:Interaction.Behaviors>
-                            <helper:PasswordBoxBindingBehavior Password="{Binding SelectedEsUser.NewPassword, Mode=TwoWay}" IsClear="{Binding SelectedEsUser.IsClearPassword, Mode= OneWay}"/>
+                            <helper:PasswordBoxBindingBehavior Password="{Binding SelectedEsUser.NewPassword, Mode=TwoWay}" IsClear="{Binding SelectedEsUser.IsClearPassword, Mode= OneWay}" />
                             <helper:FocusNextElementBehaviors />
                         </i:Interaction.Behaviors>
                     </PasswordBox>
-                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Կրկնել գաղտնաբառը:"/>
-                    <PasswordBox Grid.Column="1" Grid.Row="3" Margin="1">
+                    <TextBlock Grid.Column="0" Grid.Row="5" Text="Կրկնել գաղտնաբառը:"/>
+                    <PasswordBox Grid.Column="1" Grid.Row="5" Margin="3 1 1 1" IsEnabled="{Binding IsEnabledEditMode}">
                         <i:Interaction.Behaviors>
                             <helper:PasswordBoxBindingBehavior Password="{Binding SelectedEsUser.ConfirmPassword, Mode=TwoWay}" IsClear="{Binding SelectedEsUser.IsClearPassword, Mode= OneWay}"/>
                             <helper:FocusNextElementBehaviors />
                         </i:Interaction.Behaviors>
                     </PasswordBox>
 
-                    <TextBlock Grid.Column="2" Grid.Row="2" Text="Ակտիվ"/>
-                    <CheckBox Grid.Column="3" Grid.Row="2" IsChecked="{Binding SelectedEsUser.IsActive, UpdateSourceTrigger=PropertyChanged}" Margin="1"/>
+                    <TextBlock Grid.Column="0" Grid.Row="6" Text="Ակտիվ"/>
+                    <CheckBox Grid.Column="1" Grid.Row="6" IsChecked="{Binding SelectedEsUser.IsActive, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsEnabledEditMode}" Margin="3 1 1 1"/>
+                    <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="1">
+                        <Button  Content="Նոր" Command="{Binding NewUserCommand}" CommandParameter="{Binding SelectedEsUser}"/>
+                        <Button Content="{Binding EditButonContent}" Command="{Binding EditUserCommand}" CommandParameter="{Binding SelectedEsUser}"/>
+                    </StackPanel>
                 </Grid>
             </GroupBox>
-            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="1">
-                <Button  Content="Նոր" Command="{Binding NewUserCommand}" CommandParameter="{Binding SelectedEsUser}"/>
-                <Button Content="{Binding EditButonContent}" Command="{Binding EditUserCommand}" CommandParameter="{Binding SelectedEsUser}"/>
-            </StackPanel>
         </Grid>
-
     </DataTemplate>
 </ResourceDictionary>

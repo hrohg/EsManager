@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -13,37 +14,69 @@ namespace ES.Business.Managers
         #region Private methods
 
         #region Converters
-        private static EsUserModel Convert(EsUsers user)
+        private static EsUserModel Convert(EsUsers item)
         {
+            if (item == null) return null;
             return new EsUserModel
             {
-                UserId = user.UserId,
-                IsActive = user.IsActive,
-                UserName = user.UserName,
-                Email = user.Email,
-                Mobile = user.Mobile,
-                ClubSixteenId = user.ClubSixteenId,
-                LastActivityDate = user.LastActivityDate
+                UserId = item.UserId,
+                IsActive = item.IsActive,
+                UserName = item.UserName,
+                Email = item.Email,
+                Mobile = item.Mobile,
+                ClubSixteenId = item.ClubSixteenId,
+                LastActivityDate = item.LastActivityDate
             };
         }
-        private static EsUsers Convert(EsUserModel user)
+        private static EsUsers Convert(EsUserModel item)
         {
+            if (item == null) return null;
             return new EsUsers
             {
-                UserId = user.UserId,
-                IsActive = user.IsActive,
-                UserName = user.UserName,
-                Email = user.Email,
-                Mobile = user.Mobile,
-                ClubSixteenId = user.ClubSixteenId,
-                LastActivityDate = user.LastActivityDate,
-                Password = EncodePassword(user.NewPassword)
+                UserId = item.UserId,
+                IsActive = item.IsActive,
+                UserName = item.UserName,
+                Email = item.Email,
+                Mobile = item.Mobile,
+                ClubSixteenId = item.ClubSixteenId,
+                LastActivityDate = item.LastActivityDate,
+                Password = EncodePassword(item.NewPassword)
+            };
+        }
+
+        private static MemberUsersRoles Convert(MemberUsersRolesModel item)
+        {
+            if (item == null) return null;
+            return new MemberUsersRoles
+            {
+                Id = item.Id,
+                EsUserId = item.EsUserId,
+                EsUsers = Convert(item.EsUsers),
+                MemberId = item.MemberId,
+                EsMembers = MembersManager.Convert(item.EsMembers),
+                MemberRoleId = item.MemberRoleId,
+                MembersRoles = MembersManager.Convert(item.MembersRoles)
+            };
+        }
+        private static MemberUsersRolesModel Convert(MemberUsersRoles item)
+        {
+            if (item == null) return null;
+            return new MemberUsersRolesModel
+            {
+                Id = item.Id,
+                EsUserId = item.EsUserId,
+                EsUsers = Convert(item.EsUsers),
+                MemberId = item.MemberId,
+                EsMembers = MembersManager.Convert(item.EsMembers),
+                MemberRoleId = item.MemberRoleId,
+                MembersRoles = MembersManager.Convert(item.MembersRoles)
             };
         }
         #endregion Converters
 
         private static string EncodePassword(string password)
         {
+            if (string.IsNullOrEmpty(password)) return string.Empty;
             //Declarations
             Byte[] originalBytes;
             Byte[] encodedBytes;
@@ -70,7 +103,6 @@ namespace ES.Business.Managers
                     return new List<EsUsers>();
                 }
             }
-
         }
         private static bool TryEditUser(EsUsers user)
         {
@@ -79,8 +111,8 @@ namespace ES.Business.Managers
                 try
                 {
                     var exUser = db.EsUsers.SingleOrDefault(s => s.UserId == user.UserId ||
-                        string.Equals(s.UserName, user.UserName, StringComparison.CurrentCultureIgnoreCase) ||
-                        string.Equals(s.Email, user.Email, StringComparison.CurrentCultureIgnoreCase));
+                        s.UserName.ToLower() == user.UserName.ToLower() ||
+                        s.Email.ToLower() == user.Email.ToLower());
                     user.LastActivityDate = DateTime.Now;
                     if (exUser != null && user.UserId != 0)
                     {
@@ -107,6 +139,59 @@ namespace ES.Business.Managers
                 }
             }
         }
+
+        private static List<MemberUsersRoles> TryGetMemberUsersRoles(long memberId)
+        {
+            using (var db = GetDataContext())
+            {
+                try
+                {
+                    return db.MemberUsersRoles.Where(s => s.MemberId == memberId).Include(s=>s.MembersRoles).Include(s=>s.EsUsers).Include(s=>s.EsMembers).ToList();
+                }
+                catch (Exception)
+                {
+                    return new List<MemberUsersRoles>();
+                }
+            }
+        }
+
+        private static bool TryEditUserRoles(long userId, List<long> roleIds, long memberId)
+        {
+            using (var db = GetDataContext())
+            {
+                try
+                {
+                    var exRoles = db.MemberUsersRoles.Where(s => s.MemberId == memberId && s.EsUserId == userId);
+                    foreach (var item in exRoles)
+                    {
+                        if (roleIds.Any(s => s == item.MemberRoleId))
+                        {
+                            roleIds.Remove(roleIds.First(s => s == item.MemberRoleId));
+                        }
+                        else
+                        {
+                            db.MemberUsersRoles.Remove(item);
+                        }
+                    }
+                    foreach (var item in roleIds)
+                    {
+                        db.MemberUsersRoles.Add(new MemberUsersRoles()
+                        {
+                            Id = Guid.NewGuid(),
+                            MemberId = memberId,
+                            EsUserId = userId,
+                            MemberRoleId = item
+                        });
+                    }
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
         #endregion Private methods
 
         #region Public methods
@@ -119,8 +204,16 @@ namespace ES.Business.Managers
             return TryEditUser(Convert(user));
         }
 
+        public static List<MemberUsersRolesModel> GetMemberUsersRoles(long memberId)
+        {
+            return TryGetMemberUsersRoles(memberId).Select(Convert).ToList();
+        }
+        public static bool EditUserRoles(long userId, IEnumerable<long> roleIds, long memberId)
+        {
+            return TryEditUserRoles(userId, roleIds.ToList(), memberId);
+        }
         #endregion Public methods
 
-
+        
     }
 }

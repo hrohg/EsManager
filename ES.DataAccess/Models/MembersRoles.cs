@@ -12,21 +12,16 @@ namespace ES.DataAccess.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EsUsers
+    public partial class MembersRoles
     {
-        public EsUsers()
+        public MembersRoles()
         {
             this.MemberUsersRoles = new HashSet<MemberUsersRoles>();
         }
     
-        public long UserId { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
-        public string Mobile { get; set; }
-        public bool IsActive { get; set; }
-        public System.DateTime LastActivityDate { get; set; }
-        public string ClubSixteenId { get; set; }
+        public long Id { get; set; }
+        public string RoleName { get; set; }
+        public string Description { get; set; }
     
         public virtual ICollection<MemberUsersRoles> MemberUsersRoles { get; set; }
     }

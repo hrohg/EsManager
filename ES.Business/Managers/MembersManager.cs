@@ -1,27 +1,134 @@
 ﻿using System;
 using System.Collections.Generic;
-using ES.DataAccess.Helpers;
+using System.Linq;
+using Es.Data.Models;
 using ES.DataAccess.Models;
 
 namespace ES.Business.Managers
 {
-    public class MembersManager : ManagerBase
+    public class MembersManager:ManagerBase
     {
-        public static List<ESSharedProducts> GetProducts()
+        #region Private methods
+
+        #region Converters
+        public static EsMemberModel Convert(EsMembers item)
+        {
+            return new EsMemberModel()
+            {
+                Id = item.Id,
+                FullName = item.FullName,
+                Email = item.Email,
+                ClubSixteenId = item.ClubSixteenId
+            };
+        }
+        public static EsMembers Convert(EsMemberModel item)
+        {
+            return new EsMembers
+            {
+                Id = item.Id,
+                FullName = item.FullName,
+                Email = item.Email,
+                ClubSixteenId = item.ClubSixteenId
+            };
+        }
+        public static MembersRoles Convert(MemberRoleModel item)
+        {
+            return new MembersRoles
+            {
+                Id = item.Id,
+                RoleName = item.RoleName,
+                Description = item.Description
+            };
+        }
+        public static MemberRoleModel Convert(MembersRoles item)
+        {
+            return new MemberRoleModel
+            {
+                Id = item.Id,
+                RoleName = item.RoleName,
+                Description = item.Description
+            };
+        }
+        #endregion Converters
+
+        private static List<EsMembers> TryGetMembers()
+        {
+             using (var db = GetDataContext())
+            {
+                try
+                {
+                    return db.EsMembers.ToList();
+                }
+                catch (Exception)
+                {
+                    return new List<EsMembers>();
+                }
+            }
+        }
+        private static bool TryEdit(EsMembers item)
         {
             using (var db = GetDataContext())
             {
                 try
                 {
-                    return null;
+                    var exItem = db.EsMembers.SingleOrDefault(s => s.Id == item.Id ||
+                        s.FullName.ToLower() == item.FullName.ToLower());
+                    
+                    if (exItem != null && item.Id != 0)
+                    {
+                        exItem.Id = item.Id;
+                        exItem.FullName = item.FullName;
+                        exItem.Email = item.Email;
+                        exItem.ClubSixteenId = item.ClubSixteenId;
+                    }
+                    else
+                    {
+                        if (item.Id != 0) return false;
+                        item.Id = db.EsMembers.Max(s => s.Id) + 1;
+                        db.EsMembers.Add(item);
+                    }
+                    db.SaveChanges();
+                    return true;
                 }
                 catch (Exception)
                 {
-                    return new List<ESSharedProducts>();
+                    return false;
                 }
-                
             }
-            
-        } 
+        }
+
+        private static List<MembersRoles> TryGetMemberRoles()
+        {
+            using (var db = GetDataContext())
+            {
+                try
+                {
+                    return db.MembersRoles.ToList();
+                }
+                catch (Exception)
+                {
+                    return new List<MembersRoles>();
+                }
+            }
+        }
+        #endregion Private methods
+
+        #region Public methods
+        public static List<EsMemberModel> GetEsMembers()
+        {
+            return TryGetMembers().Select(Convert).ToList();
+        }
+
+        public static List<MemberRoleModel> GetMemberUsersRoles()
+        {
+            return TryGetMemberRoles().Select(Convert).ToList();
+        }
+
+        #endregion Public methods
+
+        public static bool Edit(EsMemberModel selectedMember)
+        {
+            return TryEdit(Convert(selectedMember));
+        }
     }
 }

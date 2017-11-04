@@ -12,18 +12,15 @@ namespace ES.DataAccess.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EsMembers
+    public partial class MemberUsersRoles
     {
-        public EsMembers()
-        {
-            this.MemberUsersRoles = new HashSet<MemberUsersRoles>();
-        }
+        public System.Guid Id { get; set; }
+        public long MemberRoleId { get; set; }
+        public long EsUserId { get; set; }
+        public long MemberId { get; set; }
     
-        public long Id { get; set; }
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public string ClubSixteenId { get; set; }
-    
-        public virtual ICollection<MemberUsersRoles> MemberUsersRoles { get; set; }
+        public virtual EsMembers EsMembers { get; set; }
+        public virtual EsUsers EsUsers { get; set; }
+        public virtual MembersRoles MembersRoles { get; set; }
     }
 }

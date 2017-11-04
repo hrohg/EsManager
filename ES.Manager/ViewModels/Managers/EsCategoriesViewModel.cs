@@ -22,7 +22,7 @@ namespace ES.Manager.ViewModels.Managers
 
         #region External properties
 
-#region Categories
+        #region Categories
         private List<EsCategoriesModel> _items;
         public List<EsCategoriesModel> Items
         {
@@ -43,7 +43,7 @@ namespace ES.Manager.ViewModels.Managers
                 ParentCategories = value;
             }
         }
-#endregion Categories
+        #endregion Categories
 
         private List<EsCategoriesModel> _parentCategories;
         public List<EsCategoriesModel> ParentCategories
@@ -149,7 +149,7 @@ namespace ES.Manager.ViewModels.Managers
         private void Initialize()
         {
             Title = "Manage ES categories";
-            
+
             NewCommand = new RelayCommand<EsCategoriesModel>(OnNew, CanNew);
             EditCommand = new RelayCommand<EsCategoriesModel>(OnEdit, CanEdit);
             RemoveCommand = new RelayCommand<EsCategoriesModel>(OnRemove, CanRemove);
@@ -261,7 +261,7 @@ namespace ES.Manager.ViewModels.Managers
                 }
             }
             return list;
-        } 
+        }
 
         #endregion Internal methods
 
@@ -285,7 +285,7 @@ namespace ES.Manager.ViewModels.Managers
         {
             get
             {
-                if(_refreshCommand==null) _refreshCommand=new RelayCommand(OnRefresh);
+                if (_refreshCommand == null) _refreshCommand = new RelayCommand(OnRefresh);
                 return _refreshCommand;
             }
         }
@@ -330,7 +330,7 @@ namespace ES.Manager.ViewModels.Managers
         {
             IsSettingParent = false;
             var parentItem = args as EsCategoriesModel;
-            if(parentItem!=null && parentItem.Id==Category.Id) return;
+            if (parentItem != null && parentItem.Id == Category.Id) return;
             var lastparent = Category.Parent;
             if (lastparent != null)
             {
@@ -340,9 +340,9 @@ namespace ES.Manager.ViewModels.Managers
             {
                 Items.Remove(Category);
             }
-            
-            
-            
+
+
+
             Category.Parent = parentItem;
             Category.ParentId = parentItem != null ? parentItem.Id : (Guid?)null;
             if (parentItem != null)
