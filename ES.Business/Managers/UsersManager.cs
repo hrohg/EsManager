@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Es.Data.Models;
+using ES.Common.Helpers;
 using ES.DataAccess.Models;
 
 namespace ES.Business.Managers
@@ -40,7 +41,7 @@ namespace ES.Business.Managers
                 Mobile = item.Mobile,
                 ClubSixteenId = item.ClubSixteenId,
                 LastActivityDate = item.LastActivityDate,
-                Password = EncodePassword(item.NewPassword)
+                Password = EncodePassword(PasswordHelper.Convert(item.NewPassword))
             };
         }
 
@@ -123,10 +124,12 @@ namespace ES.Business.Managers
                         exUser.Mobile = user.Mobile;
                         exUser.ClubSixteenId = user.ClubSixteenId;
                         exUser.LastActivityDate = user.LastActivityDate;
+
+                        if (!string.IsNullOrEmpty(user.Password)) exUser.Password = user.Password;
                     }
                     else
                     {
-                        if (user.UserId != 0 || string.IsNullOrEmpty(user.Password)) return false;
+                        if (string.IsNullOrEmpty(user.Password)) return false;
                         user.UserId = db.EsUsers.Max(s => s.UserId) + 1;
                         db.EsUsers.Add(user);
                     }

@@ -123,7 +123,7 @@ namespace ES.Business.Managers
             get
             {
                 string providerName = "System.Data.SqlClient";
-                string serverName = "93.187.163.33,14033";
+                string serverName = "bamboo.arvixe.com";
                 string databaseName = "EsStockDb";
 
                 // Initialize the connection string builder for the
@@ -137,88 +137,8 @@ namespace ES.Business.Managers
                 sqlBuilder.IntegratedSecurity = false;
                 sqlBuilder.PersistSecurityInfo = true;
                 sqlBuilder.MultipleActiveResultSets = true;
-                sqlBuilder.UserID = "sa";
-                sqlBuilder.Password = "academypbx569280";
-
-                // Build the SqlConnection connection string.
-                string providerString = sqlBuilder.ToString();
-
-                // Initialize the EntityConnectionStringBuilder.
-                EntityConnectionStringBuilder entityBuilder =
-                    new EntityConnectionStringBuilder();
-
-                //Set the provider name.
-                entityBuilder.Provider = providerName;
-
-                // Set the provider-specific connection string.
-                entityBuilder.ProviderConnectionString = providerString;
-
-                // Set the Metadata location.
-                entityBuilder.Metadata = @"res://*/Models.EsStockDbModel.csdl|res://*/Models.EsStockDbModel.ssdl|res://*/Models.EsStockDbModel.msl";
-                return entityBuilder.ConnectionString;
-            }
-        }
-        public static string GitunikConnectionString
-        {
-            get
-            {
-                string providerName = "System.Data.SqlClient";
-                string serverName = "87.241.191.72";
-                string databaseName = "EsStockDb";
-
-                // Initialize the connection string builder for the
-                // underlying provider.
-                SqlConnectionStringBuilder sqlBuilder =
-                    new SqlConnectionStringBuilder();
-
-                // Set the properties for the data source.
-                sqlBuilder.DataSource = serverName;
-                sqlBuilder.InitialCatalog = databaseName;
-                sqlBuilder.IntegratedSecurity = false;
-                sqlBuilder.PersistSecurityInfo = true;
-                sqlBuilder.MultipleActiveResultSets = true;
-                sqlBuilder.UserID = "sa";
-                sqlBuilder.Password = "kinutigkirqop";
-
-                // Build the SqlConnection connection string.
-                string providerString = sqlBuilder.ToString();
-
-                // Initialize the EntityConnectionStringBuilder.
-                EntityConnectionStringBuilder entityBuilder =
-                    new EntityConnectionStringBuilder();
-
-                //Set the provider name.
-                entityBuilder.Provider = providerName;
-
-                // Set the provider-specific connection string.
-                entityBuilder.ProviderConnectionString = providerString;
-
-                // Set the Metadata location.
-                entityBuilder.Metadata = @"res://*/Models.EsStockDbModel.csdl|res://*/Models.EsStockDbModel.ssdl|res://*/Models.EsStockDbModel.msl";
-                return entityBuilder.ConnectionString;
-            }
-        }
-        public static string AramConnectionString
-        {
-            get
-            {
-                string providerName = "System.Data.SqlClient";
-                string serverName = @"87.241.164.170\esl";
-                string databaseName = "EsStockDb";
-
-                // Initialize the connection string builder for the
-                // underlying provider.
-                SqlConnectionStringBuilder sqlBuilder =
-                    new SqlConnectionStringBuilder();
-
-                // Set the properties for the data source.
-                sqlBuilder.DataSource = serverName;
-                sqlBuilder.InitialCatalog = databaseName;
-                sqlBuilder.IntegratedSecurity = false;
-                sqlBuilder.PersistSecurityInfo = true;
-                sqlBuilder.MultipleActiveResultSets = true;
-                sqlBuilder.UserID = "sa";
-                sqlBuilder.Password = "eslsqlserver@)!$";
+                sqlBuilder.UserID = "esstockdb_user";
+                sqlBuilder.Password = "esstockdb@)!$";
 
                 // Build the SqlConnection connection string.
                 string providerString = sqlBuilder.ToString();

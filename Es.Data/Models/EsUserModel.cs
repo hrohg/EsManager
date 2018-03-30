@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Security;
 
 namespace Es.Data.Models
 {
@@ -31,9 +32,9 @@ namespace Es.Data.Models
         private string _mobile;
         private bool _isActive;
         private string _clubSixteenId;
-        private string _password;
-        private string _newPassword;
-        private string _confirmPassword;
+        private SecureString _password;
+        private SecureString _newPassword;
+        private SecureString _confirmPassword;
         private DateTime _lastActivityDate;
 
         private string _firstName;
@@ -93,17 +94,17 @@ namespace Es.Data.Models
             get { return _isActive; }
             set { _isActive = value; OnPropertyChanged(IsActiveProperty); }
         }
-        public string Password
+        public SecureString Password
         {
             get { return _password; }
             set { _password = value; OnPropertyChanged(PasswordProperty); }
         }
-        public string NewPassword
+        public SecureString NewPassword
         {
             get { return _newPassword; }
             set { _newPassword = value; OnPropertyChanged(NewPasswordProperty); }
         }
-        public string ConfirmPassword
+        public SecureString ConfirmPassword
         {
             get { return _confirmPassword; }
             set { _confirmPassword = value; OnPropertyChanged(ConfirmPasswordProperty); }
@@ -129,9 +130,11 @@ namespace Es.Data.Models
         /// <summary>
         /// EsUserModel methods
         /// </summary>
+        
         #region private methods
 
         #endregion
+
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)

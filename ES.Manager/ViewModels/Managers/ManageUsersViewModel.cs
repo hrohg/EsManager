@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using Es.Data.Models;
 using ES.Business.Managers;
+using ES.Common.Helpers;
 using ES.Common.ViewModels;
 
 namespace ES.Manager.ViewModels.Managers
@@ -51,7 +52,7 @@ namespace ES.Manager.ViewModels.Managers
                 if (_selectedEsUser != null)
                 {
                     _selectedEsUser.IsClearPassword = true;
-                    _selectedEsUser.NewPassword = string.Empty;
+                    _selectedEsUser.NewPassword = new SecureString();
                     _selectedEsUser.IsClearPassword = false;
                 }
 
@@ -152,7 +153,7 @@ namespace ES.Manager.ViewModels.Managers
         private bool CanEditUser(object o)
         {
             return SelectedEsUser != null && !string.IsNullOrEmpty(SelectedEsUser.UserName) &&
-                !string.IsNullOrEmpty(SelectedEsUser.Email);
+                !string.IsNullOrEmpty(SelectedEsUser.Email) && PasswordHelper.Convert(SelectedEsUser.NewPassword) == PasswordHelper.Convert(SelectedEsUser.ConfirmPassword);
         }
         private void OnEditUser(object o)
         {
