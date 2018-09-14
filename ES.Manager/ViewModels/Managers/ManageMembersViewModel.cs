@@ -26,7 +26,7 @@ namespace ES.Manager.ViewModels.Managers
             get
             {
                 return _esMembers != null ?
-                    _esMembers.Where(s => string.IsNullOrEmpty(MemberFilter) || s.FullName.ToLower().Contains(MemberFilter.ToLower())).OrderBy(s => s.FullName).ToList() : new List<EsMemberModel>();
+                    _esMembers.Where(s => string.IsNullOrEmpty(MemberFilter) || s.FullName.ToLower().Contains(MemberFilter.ToLower())).OrderBy(s => s.Id).ToList() : new List<EsMemberModel>();
             }
             set
             {

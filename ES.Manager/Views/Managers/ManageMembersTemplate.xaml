@@ -51,21 +51,24 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Անվանում:"/>
-                                <TextBox  Grid.Column="1" Grid.Row="0" 
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="ID:"/>
+                                <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding SelectedMember.Id}"/>
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="Անվանում:"/>
+                                <TextBox  Grid.Column="1" Grid.Row="1" 
                                           Text="{Binding SelectedMember.FullName, UpdateSourceTrigger=PropertyChanged}" 
                                           IsEnabled="{Binding IsEnabledEditMode}" Margin="1"/>
-                                <TextBlock Grid.Column="0" Grid.Row="1" Text="Էլ փոստ:"/>
-                                <TextBox Grid.Column="1" Grid.Row="1" 
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Էլ փոստ:"/>
+                                <TextBox Grid.Column="1" Grid.Row="2" 
                                          Text="{Binding SelectedMember.Email, UpdateSourceTrigger=PropertyChanged}" 
                                          IsEnabled="{Binding IsEnabledEditMode}" Margin="1"/>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="ClubSixteenId:"/>
-                                <TextBox Grid.Column="1" Grid.Row="2" 
+                                <TextBlock Grid.Column="0" Grid.Row="3" Text="ClubSixteenId:"/>
+                                <TextBox Grid.Column="1" Grid.Row="3" 
                                          Text="{Binding SelectedMember.ClubSixteenId, UpdateSourceTrigger=PropertyChanged}" 
                                          IsEnabled="{Binding IsEnabledEditMode}" Margin="1"/>
 
-                                <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="1">
+                                <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="1">
                                     <Button  Content="Նոր" Command="{Binding NewCommand}" CommandParameter="{Binding SelectedMember}"/>
                                     <Button Content="{Binding EditButonContent}" Command="{Binding EditCommand}" CommandParameter="{Binding SelectedMember}"/>
                                 </StackPanel>
