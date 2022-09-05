@@ -6,7 +6,7 @@ namespace ES.Manager.Helpers
 {
     public class BoolInvertConverter : IValueConverter
     {
-        #region IValueConverter Members
+        #region IValueConverter Members1
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
