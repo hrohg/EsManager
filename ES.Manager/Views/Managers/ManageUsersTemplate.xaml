@@ -3,7 +3,7 @@
                     xmlns:model="clr-namespace:Es.Data.Models;assembly=Es.Data"
                     xmlns:settings="clr-namespace:ES.Manager.ViewModels.Managers"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-                    xmlns:helper="clr-namespace:ES.Manager.Helper">
+                    xmlns:helpers="clr-namespace:ES.Manager.Helpers">
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="Width" Value="80"/>
         <Setter Property="Margin" Value="1"/>
@@ -66,21 +66,21 @@
                     <TextBlock Grid.Column="0" Grid.Row="2" Text="Հեռախոս:"/>
                     <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SelectedEsUser.Mobile, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsEnabledEditMode}" Margin="3 1 1 1"/>
                     
-                    <TextBlock Grid.Column="0" Grid.Row="3" Text="ClubSixteenId:"/>
-                    <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding SelectedEsUser.ClubSixteenId, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsEnabledEditMode}" Margin="3 1 1 1"/>
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Id:"/>
+                    <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding SelectedEsUser.EssClubIdId, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsEnabledEditMode}" Margin="3 1 1 1"/>
 
                     <TextBlock Grid.Column="0" Grid.Row="4" Text="Գաղտնաբառ:"/>
                     <PasswordBox Grid.Column="1" Grid.Row="4" Margin="3 1 1 1" IsEnabled="{Binding IsEnabledEditMode}">
                         <i:Interaction.Behaviors>
-                            <helper:PasswordBoxBindingBehavior Password="{Binding SelectedEsUser.NewPassword, Mode=TwoWay}" IsClear="{Binding SelectedEsUser.IsClearPassword, Mode= OneWay}" />
-                            <helper:FocusNextElementBehaviors />
+                            <helpers:PasswordBoxBindingBehavior Password="{Binding SelectedEsUser.NewPassword, Mode=TwoWay}" IsClear="{Binding SelectedEsUser.IsClearPassword, Mode= OneWay}" />
+                            <helpers:FocusNextElementBehaviors />
                         </i:Interaction.Behaviors>
                     </PasswordBox>
                     <TextBlock Grid.Column="0" Grid.Row="5" Text="Կրկնել գաղտնաբառը:"/>
                     <PasswordBox Grid.Column="1" Grid.Row="5" Margin="3 1 1 1" IsEnabled="{Binding IsEnabledEditMode}">
                         <i:Interaction.Behaviors>
-                            <helper:PasswordBoxBindingBehavior Password="{Binding SelectedEsUser.ConfirmPassword, Mode=TwoWay}" IsClear="{Binding SelectedEsUser.IsClearPassword, Mode= OneWay}"/>
-                            <helper:FocusNextElementBehaviors />
+                            <helpers:PasswordBoxBindingBehavior Password="{Binding SelectedEsUser.ConfirmPassword, Mode=TwoWay}" IsClear="{Binding SelectedEsUser.IsClearPassword, Mode= OneWay}"/>
+                            <helpers:FocusNextElementBehaviors />
                         </i:Interaction.Behaviors>
                     </PasswordBox>
 

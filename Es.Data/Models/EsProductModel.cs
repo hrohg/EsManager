@@ -17,7 +17,7 @@ namespace Es.Data.Models
         private const string BarcodeProperty = "Barcode";
         private const string HcdCsProperty = "HcdCs";
         private const string DescriptionProperty = "Description";
-        private const string MuProperty = "Mu";
+        private const string MeasureOfunitIProperty = "MeasureOfunitId";
         private const string NoteProperty = "Note";
         private const string CostPriceProperty = "CostPrice";
         private const string ProfitPercentProperty = "ProfitPercent";
@@ -45,7 +45,7 @@ namespace Es.Data.Models
         private string _barcode;
         private string _hcdCs;
         private string _description;
-        private string _mu;
+        private short? _MeasureOfunitId;
         private string _note;
         private decimal? _costPrice;
         private decimal? _oldPrice;
@@ -76,8 +76,8 @@ namespace Es.Data.Models
         public List<ProductGroupModel> ProductGroups { get; set; }
         public List<ProductCategoriesModel> ProductCategories { get; set; }
         public string Description { get { return _description; } set { _description = value; OnPropertyChanged(DescriptionProperty); } }
-        public string Mu { get { return _mu; } set { _mu = value; OnPropertyChanged(MuProperty); } }
-        public bool? IsWeight { get; set; }
+        public short? MeasureOfunitId { get { return _MeasureOfunitId; } set { _MeasureOfunitId = value; OnPropertyChanged(MeasureOfunitIProperty); } }
+        
         public string Note { get { return _note; } set { _note = value; OnPropertyChanged(NoteProperty); } }
         public decimal? CostPrice
         {
@@ -214,7 +214,7 @@ namespace Es.Data.Models
             Id = item.Id;
             Code = item.Code;
             Description = item.Description;
-            Mu = item.Mu;
+            MeasureOfunitId = item.MeasureOfunitId;
             Note = item.Note;
             CostPrice = item.CostPrice;
             OldPrice = item.OldPrice;

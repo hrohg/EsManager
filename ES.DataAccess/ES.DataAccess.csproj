@@ -65,6 +65,9 @@
     <Compile Include="Models\EsMembers.cs">
       <DependentUpon>EsStockDbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EsmMeasureOfUnits.cs">
+      <DependentUpon>EsStockDbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EsServerModel.cs" />
     <Compile Include="Models\ESSharedProducts.cs">
       <DependentUpon>EsStockDbModel.tt</DependentUpon>
@@ -86,6 +89,9 @@
       <DependentUpon>EsStockDbModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\EsUsers.cs">
+      <DependentUpon>EsStockDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MembersBrands.cs">
       <DependentUpon>EsStockDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MembersRoles.cs">

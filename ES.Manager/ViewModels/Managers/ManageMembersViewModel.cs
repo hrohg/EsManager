@@ -21,19 +21,19 @@ namespace ES.Manager.ViewModels.Managers
         #region Members
 
         private List<EsMemberModel> _esMembers;
-        public List<EsMemberModel> EsMembers
-        {
-            get
+            public List<EsMemberModel> EsMembers
             {
-                return _esMembers != null ?
-                    _esMembers.Where(s => string.IsNullOrEmpty(MemberFilter) || s.FullName.ToLower().Contains(MemberFilter.ToLower())).OrderBy(s => s.Id).ToList() : new List<EsMemberModel>();
+                get
+                {
+                    return _esMembers != null ?
+                        _esMembers.Where(s => string.IsNullOrEmpty(MemberFilter) || s.Name.ToLower().Contains(MemberFilter.ToLower())).OrderBy(s => s.Id).ToList() : new List<EsMemberModel>();
+                }
+                set
+                {
+                    _esMembers = value.ToList();
+                    RaisePropertyChanged("EsMembers");
+                }
             }
-            set
-            {
-                _esMembers = value.ToList();
-                RaisePropertyChanged("EsMembers");
-            }
-        }
 
         private List<MemberRoleModel> _membersRoles;
 
@@ -295,7 +295,7 @@ namespace ES.Manager.ViewModels.Managers
         public ICommand NewCommand { get { return _newCommand ?? (_newCommand = new RelayCommand(OnNew, CanNew)); } }
         private bool CanNew(object o)
         {
-            return SelectedMember == null || !string.IsNullOrEmpty(SelectedMember.FullName);
+            return SelectedMember == null || !string.IsNullOrEmpty(SelectedMember.Name);
         }
         private void OnNew(object o)
         {
@@ -310,7 +310,7 @@ namespace ES.Manager.ViewModels.Managers
         public ICommand EditCommand { get { return _editCommand ?? (_editCommand = new RelayCommand(OnEdit, CanEdit)); } }
         private bool CanEdit(object o)
         {
-            return SelectedMember != null && !string.IsNullOrEmpty(SelectedMember.FullName);
+            return SelectedMember != null && !string.IsNullOrEmpty(SelectedMember.Name);
         }
         private void OnEdit(object o)
         {

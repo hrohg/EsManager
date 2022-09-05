@@ -13,7 +13,7 @@ namespace Es.Data.Models
         private const string UserNameProperty = "UserName";
         private const string EmailProperty = "Email";
         private const string MobileProperty = "Mobile";
-        private const string ClubSixteenIdProperty = "ClubSixteenId";
+        private const string EssClubIdProperty = "EssClubId";
         private const string IsActiveProperty = "IsActive";
         private const string PasswordProperty = "Password";
         private const string NewPasswordProperty = "NewPassword";
@@ -26,12 +26,12 @@ namespace Es.Data.Models
         /// EsUsermodel private properties
         /// </summary>
         #region Private properties
-        private long _userId = 0;
+        private int _userId = 0;
         private string _userName;
         private string _email;
         private string _mobile;
         private bool _isActive;
-        private string _clubSixteenId;
+        private string _essClubId;
         private SecureString _password;
         private SecureString _newPassword;
         private SecureString _confirmPassword;
@@ -44,7 +44,7 @@ namespace Es.Data.Models
         /// EsUserModel public properties
         /// </summary>
         #region Public properties
-        public long UserId
+        public int UserId
         {
             get { return _userId; }
             set { _userId = value; }
@@ -83,10 +83,10 @@ namespace Es.Data.Models
             set { _mobile = value; OnPropertyChanged(MobileProperty); }
         }
 
-        public string ClubSixteenId
+        public string EssClubIdId
         {
-            get { return _clubSixteenId; }
-            set { _clubSixteenId = value; OnPropertyChanged(ClubSixteenIdProperty); }
+            get { return _essClubId; }
+            set { _essClubId = value; OnPropertyChanged(EssClubIdProperty); }
         }
 
         public bool IsActive

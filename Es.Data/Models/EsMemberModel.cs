@@ -9,27 +9,25 @@ namespace Es.Data.Models
         /// </summary>
         #region Properties
         private const string IdProperty = "Id";
-        private const string FullNameProperty = "FullName";
-        private const string EmailProperty = "Email";
-        private const string ClubSixteenIdProperty = "ClubSisteenId";
+        private const string NameProperty = "Name";
+        private const string ContractNumberProperty = "ContractNumber";
         #endregion
         /// <summary>
         /// Private properties
         /// </summary>
         #region Private properties
-        private long _id = 0;
+        private int _id = 0;
         private string _fullName;
         private string _email;
-        private string _clubSixteenId;
+        private string _contractNumber;
         #endregion
         /// <summary>
         /// Public properties
         /// </summary>
         #region Public properties
-        public long Id { get { return _id; } set { _id = value; OnPropertyChanged(IdProperty); } }
-        public string FullName { get { return _fullName; } set { _fullName = value; OnPropertyChanged(FullNameProperty); } }
-        public string Email { get { return _email; } set { _email = value; OnPropertyChanged(EmailProperty); } }
-        public string ClubSixteenId { get { return _clubSixteenId; } set { _clubSixteenId = value; OnPropertyChanged(ClubSixteenIdProperty); } }
+        public int Id { get { return _id; } set { _id = value; OnPropertyChanged(IdProperty); } }
+        public string Name { get { return _fullName; } set { _fullName = value; OnPropertyChanged(NameProperty); } }
+        public string ContractNumber { get { return _contractNumber; } set { _contractNumber = value; OnPropertyChanged(ContractNumberProperty); } }
         #endregion
         /// <summary>
         /// Property changed

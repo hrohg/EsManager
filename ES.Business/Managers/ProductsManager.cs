@@ -94,7 +94,6 @@ namespace ES.Business.Managers
                 IsActive = category.IsActive,
                 HCDCS = category.HcDcs,
                 LastModificationDate = category.LastModificationDate,
-                Logo = category.Logo,
                 LastModifierId = category.LastModifierId
             };
         }
@@ -139,7 +138,6 @@ namespace ES.Business.Managers
                 IsActive = item.IsActive,
                 HcDcs = item.HCDCS,
                 LastModificationDate = item.LastModificationDate,
-                Logo = item.Logo,
                 LastModifierId = item.LastModifierId
             };
         } 
@@ -168,7 +166,6 @@ namespace ES.Business.Managers
                         exCategory.IsActive = item.IsActive;
                         exCategory.HCDCS = item.HCDCS;
                         exCategory.LastModificationDate = item.LastModificationDate;
-                        exCategory.Logo = item.Logo;
                         exCategory.LastModifierId = item.LastModifierId;
                     }
                     db.SaveChanges();

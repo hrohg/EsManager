@@ -6,5 +6,6 @@
         <!--ES Manager-->
         <ResourceDictionary Source="Managers/ManageMembersTemplate.xaml"/>
         <ResourceDictionary Source="Managers/ManageUsersTemplate.xaml"/>
+        <ResourceDictionary Source="Managers/ManageEsPartners.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

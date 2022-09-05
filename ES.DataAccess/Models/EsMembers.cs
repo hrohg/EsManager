@@ -16,14 +16,15 @@ namespace ES.DataAccess.Models
     {
         public EsMembers()
         {
+            this.MembersBrands = new HashSet<MembersBrands>();
             this.MemberUsersRoles = new HashSet<MemberUsersRoles>();
         }
     
-        public long Id { get; set; }
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public string ClubSixteenId { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string ContractNumber { get; set; }
     
+        public virtual ICollection<MembersBrands> MembersBrands { get; set; }
         public virtual ICollection<MemberUsersRoles> MemberUsersRoles { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace ES.Business.Managers
                 UserName = item.UserName,
                 Email = item.Email,
                 Mobile = item.Mobile,
-                ClubSixteenId = item.ClubSixteenId,
+                EssClubIdId = item.EssClubId,
                 LastActivityDate = item.LastActivityDate
             };
         }
@@ -39,7 +39,7 @@ namespace ES.Business.Managers
                 UserName = item.UserName,
                 Email = item.Email,
                 Mobile = item.Mobile,
-                ClubSixteenId = item.ClubSixteenId,
+                EssClubId = item.EssClubIdId,
                 LastActivityDate = item.LastActivityDate,
                 Password = EncodePassword(PasswordHelper.Convert(item.NewPassword))
             };
@@ -122,7 +122,7 @@ namespace ES.Business.Managers
                         exUser.UserName = user.UserName;
                         exUser.Email = user.Email;
                         exUser.Mobile = user.Mobile;
-                        exUser.ClubSixteenId = user.ClubSixteenId;
+                        exUser.EssClubId = user.EssClubId;
                         exUser.LastActivityDate = user.LastActivityDate;
 
                         if (!string.IsNullOrEmpty(user.Password)) exUser.Password = user.Password;
@@ -158,7 +158,7 @@ namespace ES.Business.Managers
             }
         }
 
-        private static bool TryEditUserRoles(long userId, List<long> roleIds, long memberId)
+        private static bool TryEditUserRoles(int userId, List<int> roleIds, int memberId)
         {
             using (var db = GetDataContext())
             {
@@ -211,7 +211,7 @@ namespace ES.Business.Managers
         {
             return TryGetMemberUsersRoles(memberId).Select(Convert).ToList();
         }
-        public static bool EditUserRoles(long userId, IEnumerable<long> roleIds, long memberId)
+        public static bool EditUserRoles(int userId, IEnumerable<int> roleIds, int memberId)
         {
             return TryEditUserRoles(userId, roleIds.ToList(), memberId);
         }

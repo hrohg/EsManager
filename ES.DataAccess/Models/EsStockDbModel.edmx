@@ -12,21 +12,31 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ParentId" Type="uniqueidentifier" />
           <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="Description" Type="ntext" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
           <Property Name="HCDCS" Type="nvarchar" MaxLength="12" />
-          <Property Name="Logo" Type="nvarchar" MaxLength="250" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="LastModificationDate" Type="datetime" Nullable="false" />
-          <Property Name="LastModifierId" Type="bigint" Nullable="false" />
+          <Property Name="LastModifierId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="EsMembers">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
-          <Property Name="FullName" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ClubSixteenId" Type="nvarchar" MaxLength="25" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="ContractNumber" Type="nvarchar" MaxLength="16" />
+        </EntityType>
+        <EntityType Name="EsmMeasureOfUnits">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="24" />
+          <Property Name="Ratio" Type="decimal" Precision="18" Scale="8" />
+          <Property Name="DisplayOrder" Type="smallint" />
+          <Property Name="IsWeight" Type="bit" />
+          <Property Name="GroupId" Type="smallint" />
         </EntityType>
         <EntityType Name="ESSharedProducts">
           <Key>
@@ -34,14 +44,13 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="OriginalId" Type="uniqueidentifier" />
-          <Property Name="BrandId" Type="bigint" />
+          <Property Name="BrandId" Type="int" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
           <Property Name="Barcode" Type="nvarchar" MaxLength="128" />
           <Property Name="HCDCS" Type="nvarchar" MaxLength="12" />
-          <Property Name="Description" Type="ntext" />
-          <Property Name="Mu" Type="nvarchar" MaxLength="10" />
-          <Property Name="IsWeight" Type="bit" />
-          <Property Name="Note" Type="ntext" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+          <Property Name="MeasureOfunitId" Type="smallint" />
+          <Property Name="Note" Type="nvarchar" MaxLength="500" />
           <Property Name="CostPrice" Type="decimal" Precision="12" Scale="2" />
           <Property Name="OldPrice" Type="decimal" Precision="12" Scale="2" />
           <Property Name="Price" Type="decimal" Precision="12" Scale="2" />
@@ -49,10 +58,9 @@
           <Property Name="DealerPrice" Type="decimal" Precision="12" Scale="2" />
           <Property Name="DealerDiscount" Type="decimal" Precision="5" Scale="2" />
           <Property Name="MinQuantity" Type="decimal" Precision="12" Scale="2" />
-          <Property Name="ExpiryDays" Type="int" />
-          <Property Name="ImagePath" Type="nvarchar" MaxLength="256" />
-          <Property Name="EsMemberId" Type="bigint" Nullable="false" />
-          <Property Name="LastModifierId" Type="bigint" />
+          <Property Name="ExpiryDays" Type="smallint" />
+          <Property Name="EsMemberId" Type="int" Nullable="false" />
+          <Property Name="LastModifierId" Type="int" />
           <Property Name="IsEnable" Type="bit" />
           <Property Name="IsChecked" Type="bit" />
         </EntityType>
@@ -60,20 +68,28 @@
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Mobile" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="LastActivityDate" Type="datetime" Nullable="false" />
-          <Property Name="ClubSixteenId" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="EssClubId" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MembersBrands">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MemberId" Type="int" Nullable="false" />
+          <Property Name="BrandId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="MembersRoles">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
         </EntityType>
@@ -82,9 +98,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="MemberRoleId" Type="bigint" Nullable="false" />
-          <Property Name="EsUserId" Type="bigint" Nullable="false" />
-          <Property Name="MemberId" Type="bigint" Nullable="false" />
+          <Property Name="MemberRoleId" Type="int" Nullable="false" />
+          <Property Name="EsUserId" Type="int" Nullable="false" />
+          <Property Name="MemberId" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_EsCategories_EsCategories">
           <End Role="EsCategories" Type="Self.EsCategories" Multiplicity="0..1" />
@@ -95,6 +111,18 @@
             </Principal>
             <Dependent Role="EsCategories1">
               <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MembersBrands_EsMembers">
+          <End Role="EsMembers" Type="Self.EsMembers" Multiplicity="1" />
+          <End Role="MembersBrands" Type="Self.MembersBrands" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EsMembers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MembersBrands">
+              <PropertyRef Name="MemberId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -137,13 +165,19 @@
         <EntityContainer Name="EsStockDbModelStoreContainer">
           <EntitySet Name="EsCategories" EntityType="Self.EsCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EsMembers" EntityType="Self.EsMembers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EsmMeasureOfUnits" EntityType="Self.EsmMeasureOfUnits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ESSharedProducts" EntityType="Self.ESSharedProducts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EsUsers" EntityType="Self.EsUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MembersBrands" EntityType="Self.MembersBrands" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MembersRoles" EntityType="Self.MembersRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemberUsersRoles" EntityType="Self.MemberUsersRoles" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_EsCategories_EsCategories" Association="Self.FK_EsCategories_EsCategories">
             <End Role="EsCategories" EntitySet="EsCategories" />
             <End Role="EsCategories1" EntitySet="EsCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MembersBrands_EsMembers" Association="Self.FK_MembersBrands_EsMembers">
+            <End Role="EsMembers" EntitySet="EsMembers" />
+            <End Role="MembersBrands" EntitySet="MembersBrands" />
           </AssociationSet>
           <AssociationSet Name="FK_MemberUsersRoles_EsMembers" Association="Self.FK_MemberUsersRoles_EsMembers">
             <End Role="EsMembers" EntitySet="EsMembers" />
@@ -162,26 +196,17 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EsStockDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="EsMembers">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" />
-          <Property Name="FullName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ClubSixteenId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="MemberUsersRoles" Relationship="EsStockDbModel.FK_MemberUsersRoles_EsMembers" FromRole="EsMembers" ToRole="MemberUsersRoles" />
-        </EntityType>
         <EntityContainer Name="EsStockDbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="EsMembers" EntityType="Self.EsMembers" />
+          <EntitySet Name="EsMembers" EntityType="EsStockDbModel.EsMembers" />
           <EntitySet Name="ESSharedProducts" EntityType="EsStockDbModel.ESSharedProducts" />
-          <EntitySet Name="EsCategories" EntityType="EsStockDbModel.EsCategories" />
-          <AssociationSet Name="FK_EsCategories_EsCategories" Association="EsStockDbModel.FK_EsCategories_EsCategories">
-            <End Role="EsCategories" EntitySet="EsCategories" />
-            <End Role="EsCategories1" EntitySet="EsCategories" />
-          </AssociationSet>
           <EntitySet Name="EsUsers" EntityType="EsStockDbModel.EsUsers" />
+          <EntitySet Name="MembersBrands" EntityType="EsStockDbModel.MembersBrands" />
+          <EntitySet Name="MembersRoles" EntityType="EsStockDbModel.MembersRoles" />
           <EntitySet Name="MemberUsersRoles" EntityType="EsStockDbModel.MemberUsersRoles" />
+          <AssociationSet Name="FK_MembersBrands_EsMembers" Association="EsStockDbModel.FK_MembersBrands_EsMembers">
+            <End Role="EsMembers" EntitySet="EsMembers" />
+            <End Role="MembersBrands" EntitySet="MembersBrands" />
+          </AssociationSet>
           <AssociationSet Name="FK_MemberUsersRoles_EsMembers" Association="EsStockDbModel.FK_MemberUsersRoles_EsMembers">
             <End Role="EsMembers" EntitySet="EsMembers" />
             <End Role="MemberUsersRoles" EntitySet="MemberUsersRoles" />
@@ -190,26 +215,40 @@
             <End Role="EsUsers" EntitySet="EsUsers" />
             <End Role="MemberUsersRoles" EntitySet="MemberUsersRoles" />
           </AssociationSet>
-          <EntitySet Name="MembersRoles" EntityType="EsStockDbModel.MembersRoles" />
           <AssociationSet Name="FK_MemberUsersRoles_MembersRoles" Association="EsStockDbModel.FK_MemberUsersRoles_MembersRoles">
             <End Role="MembersRoles" EntitySet="MembersRoles" />
             <End Role="MemberUsersRoles" EntitySet="MemberUsersRoles" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="EsCategories" EntityType="EsStockDbModel.EsCategories" />
+          <EntitySet Name="EsmMeasureOfUnits" EntityType="EsStockDbModel.EsmMeasureOfUnits" />
+          <AssociationSet Name="FK_EsCategories_EsCategories" Association="EsStockDbModel.FK_EsCategories_EsCategories">
+            <End Role="EsCategories" EntitySet="EsCategories" />
+            <End Role="EsCategories1" EntitySet="EsCategories" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="EsMembers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ContractNumber" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MembersBrands" Relationship="EsStockDbModel.FK_MembersBrands_EsMembers" FromRole="EsMembers" ToRole="MembersBrands" />
+          <NavigationProperty Name="MemberUsersRoles" Relationship="EsStockDbModel.FK_MemberUsersRoles_EsMembers" FromRole="EsMembers" ToRole="MemberUsersRoles" />
+        </EntityType>
         <EntityType Name="ESSharedProducts">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="OriginalId" Type="Guid" />
-          <Property Name="BrandId" Type="Int64" />
+          <Property Name="BrandId" Type="Int32" />
           <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Barcode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="HCDCS" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Mu" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="IsWeight" Type="Boolean" />
-          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MeasureOfunitId" Type="Int16" />
+          <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CostPrice" Type="Decimal" Precision="12" Scale="2" />
           <Property Name="OldPrice" Type="Decimal" Precision="12" Scale="2" />
           <Property Name="Price" Type="Decimal" Precision="12" Scale="2" />
@@ -217,67 +256,68 @@
           <Property Name="DealerPrice" Type="Decimal" Precision="12" Scale="2" />
           <Property Name="DealerDiscount" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="MinQuantity" Type="Decimal" Precision="12" Scale="2" />
-          <Property Name="ExpiryDays" Type="Int32" />
-          <Property Name="ImagePath" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EsMemberId" Type="Int64" Nullable="false" />
-          <Property Name="LastModifierId" Type="Int64" />
+          <Property Name="ExpiryDays" Type="Int16" />
+          <Property Name="EsMemberId" Type="Int32" Nullable="false" />
+          <Property Name="LastModifierId" Type="Int32" />
           <Property Name="IsEnable" Type="Boolean" />
           <Property Name="IsChecked" Type="Boolean" />
         </EntityType>
-        <EntityType Name="EsCategories">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="ParentId" Type="Guid" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="HCDCS" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
-          <Property Name="Logo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="LastModificationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LastModifierId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="EsCategories1" Relationship="EsStockDbModel.FK_EsCategories_EsCategories" FromRole="EsCategories" ToRole="EsCategories1" />
-          <NavigationProperty Name="EsCategories2" Relationship="EsStockDbModel.FK_EsCategories_EsCategories" FromRole="EsCategories1" ToRole="EsCategories" />
-        </EntityType>
-        <Association Name="FK_EsCategories_EsCategories">
-          <End Type="EsStockDbModel.EsCategories" Role="EsCategories" Multiplicity="0..1" />
-          <End Type="EsStockDbModel.EsCategories" Role="EsCategories1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EsCategories">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="EsCategories1">
-              <PropertyRef Name="ParentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="EsUsers">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Mobile" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="LastActivityDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ClubSixteenId" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="EssClubId" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="MemberUsersRoles" Relationship="EsStockDbModel.FK_MemberUsersRoles_EsUsers" FromRole="EsUsers" ToRole="MemberUsersRoles" />
+        </EntityType>
+        <EntityType Name="MembersBrands">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="MemberId" Type="Int32" Nullable="false" />
+          <Property Name="BrandId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EsMembers" Relationship="EsStockDbModel.FK_MembersBrands_EsMembers" FromRole="MembersBrands" ToRole="EsMembers" />
+        </EntityType>
+        <EntityType Name="MembersRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MemberUsersRoles" Relationship="EsStockDbModel.FK_MemberUsersRoles_MembersRoles" FromRole="MembersRoles" ToRole="MemberUsersRoles" />
         </EntityType>
         <EntityType Name="MemberUsersRoles">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="MemberRoleId" Type="Int64" Nullable="false" />
-          <Property Name="EsUserId" Type="Int64" Nullable="false" />
-          <Property Name="MemberId" Type="Int64" Nullable="false" />
+          <Property Name="MemberRoleId" Type="Int32" Nullable="false" />
+          <Property Name="EsUserId" Type="Int32" Nullable="false" />
+          <Property Name="MemberId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="EsMembers" Relationship="EsStockDbModel.FK_MemberUsersRoles_EsMembers" FromRole="MemberUsersRoles" ToRole="EsMembers" />
           <NavigationProperty Name="EsUsers" Relationship="EsStockDbModel.FK_MemberUsersRoles_EsUsers" FromRole="MemberUsersRoles" ToRole="EsUsers" />
           <NavigationProperty Name="MembersRoles" Relationship="EsStockDbModel.FK_MemberUsersRoles_MembersRoles" FromRole="MemberUsersRoles" ToRole="MembersRoles" />
         </EntityType>
+        <Association Name="FK_MembersBrands_EsMembers">
+          <End Type="EsStockDbModel.EsMembers" Role="EsMembers" Multiplicity="1" />
+          <End Type="EsStockDbModel.MembersBrands" Role="MembersBrands" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EsMembers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MembersBrands">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MemberUsersRoles_EsMembers">
           <End Type="EsStockDbModel.EsMembers" Role="EsMembers" Multiplicity="1" />
           <End Type="EsStockDbModel.MemberUsersRoles" Role="MemberUsersRoles" Multiplicity="*" />
@@ -302,15 +342,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="MembersRoles">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" />
-          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="MemberUsersRoles" Relationship="EsStockDbModel.FK_MemberUsersRoles_MembersRoles" FromRole="MembersRoles" ToRole="MemberUsersRoles" />
-        </EntityType>
         <Association Name="FK_MemberUsersRoles_MembersRoles">
           <End Type="EsStockDbModel.MembersRoles" Role="MembersRoles" Multiplicity="1" />
           <End Type="EsStockDbModel.MemberUsersRoles" Role="MemberUsersRoles" Multiplicity="*" />
@@ -323,7 +354,46 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="EsCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ParentId" Type="Guid" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="HCDCS" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="LastModificationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifierId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EsCategories1" Relationship="EsStockDbModel.FK_EsCategories_EsCategories" FromRole="EsCategories" ToRole="EsCategories1" />
+          <NavigationProperty Name="EsCategories2" Relationship="EsStockDbModel.FK_EsCategories_EsCategories" FromRole="EsCategories1" ToRole="EsCategories" />
+        </EntityType>
+        <EntityType Name="EsmMeasureOfUnits">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="24" FixedLength="false" Unicode="true" />
+          <Property Name="Ratio" Type="Decimal" Precision="18" Scale="8" />
+          <Property Name="DisplayOrder" Type="Int16" />
+          <Property Name="IsWeight" Type="Boolean" />
+          <Property Name="GroupId" Type="Int16" />
+        </EntityType>
+        <Association Name="FK_EsCategories_EsCategories">
+          <End Type="EsStockDbModel.EsCategories" Role="EsCategories" Multiplicity="0..1" />
+          <End Type="EsStockDbModel.EsCategories" Role="EsCategories1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EsCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EsCategories1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -332,10 +402,9 @@
           <EntitySetMapping Name="EsMembers">
             <EntityTypeMapping TypeName="EsStockDbModel.EsMembers">
               <MappingFragment StoreEntitySet="EsMembers">
+                <ScalarProperty Name="ContractNumber" ColumnName="ContractNumber" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="ClubSixteenId" ColumnName="ClubSixteenId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -346,7 +415,6 @@
                 <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
                 <ScalarProperty Name="LastModifierId" ColumnName="LastModifierId" />
                 <ScalarProperty Name="EsMemberId" ColumnName="EsMemberId" />
-                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="ExpiryDays" ColumnName="ExpiryDays" />
                 <ScalarProperty Name="MinQuantity" ColumnName="MinQuantity" />
                 <ScalarProperty Name="DealerDiscount" ColumnName="DealerDiscount" />
@@ -356,8 +424,7 @@
                 <ScalarProperty Name="OldPrice" ColumnName="OldPrice" />
                 <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="IsWeight" ColumnName="IsWeight" />
-                <ScalarProperty Name="Mu" ColumnName="Mu" />
+                <ScalarProperty Name="MeasureOfunitId" ColumnName="MeasureOfunitId" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="HCDCS" ColumnName="HCDCS" />
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
@@ -368,25 +435,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EsCategories">
-            <EntityTypeMapping TypeName="EsStockDbModel.EsCategories">
-              <MappingFragment StoreEntitySet="EsCategories">
-                <ScalarProperty Name="LastModifierId" ColumnName="LastModifierId" />
-                <ScalarProperty Name="LastModificationDate" ColumnName="LastModificationDate" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Logo" ColumnName="Logo" />
-                <ScalarProperty Name="HCDCS" ColumnName="HCDCS" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="EsUsers">
             <EntityTypeMapping TypeName="EsStockDbModel.EsUsers">
               <MappingFragment StoreEntitySet="EsUsers">
-                <ScalarProperty Name="ClubSixteenId" ColumnName="ClubSixteenId" />
+                <ScalarProperty Name="EssClubId" ColumnName="EssClubId" />
                 <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Mobile" ColumnName="Mobile" />
@@ -397,12 +449,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="MemberUsersRoles">
-            <EntityTypeMapping TypeName="EsStockDbModel.MemberUsersRoles">
-              <MappingFragment StoreEntitySet="MemberUsersRoles">
+          <EntitySetMapping Name="MembersBrands">
+            <EntityTypeMapping TypeName="EsStockDbModel.MembersBrands">
+              <MappingFragment StoreEntitySet="MembersBrands">
+                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
                 <ScalarProperty Name="MemberId" ColumnName="MemberId" />
-                <ScalarProperty Name="EsUserId" ColumnName="EsUserId" />
-                <ScalarProperty Name="MemberRoleId" ColumnName="MemberRoleId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -416,7 +467,44 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="MemberUsersRoles">
+            <EntityTypeMapping TypeName="EsStockDbModel.MemberUsersRoles">
+              <MappingFragment StoreEntitySet="MemberUsersRoles">
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="EsUserId" ColumnName="EsUserId" />
+                <ScalarProperty Name="MemberRoleId" ColumnName="MemberRoleId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EsCategories">
+            <EntityTypeMapping TypeName="EsStockDbModel.EsCategories">
+              <MappingFragment StoreEntitySet="EsCategories">
+                <ScalarProperty Name="LastModifierId" ColumnName="LastModifierId" />
+                <ScalarProperty Name="LastModificationDate" ColumnName="LastModificationDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="HCDCS" ColumnName="HCDCS" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EsmMeasureOfUnits">
+            <EntityTypeMapping TypeName="EsStockDbModel.EsmMeasureOfUnits">
+              <MappingFragment StoreEntitySet="EsmMeasureOfUnits">
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="IsWeight" ColumnName="IsWeight" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Ratio" ColumnName="Ratio" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

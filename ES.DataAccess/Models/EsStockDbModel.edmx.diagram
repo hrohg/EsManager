@@ -5,17 +5,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="c25c84effdfa42cdab108b707507e2ac" Name="Diagram1" ShowGrid="true">
-        <EntityTypeShape EntityType="EsStockDbModel.EsMembers" Width="1.5" PointX="10.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="EsStockDbModel.ESSharedProducts" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="EsStockDbModel.EsCategories" Width="1.5" PointX="0.75" PointY="3.75" />
-        <AssociationConnector Association="EsStockDbModel.FK_EsCategories_EsCategories" />
-        <EntityTypeShape EntityType="EsStockDbModel.EsUsers" Width="1.5" PointX="5.375" PointY="0.75" />
-        <EntityTypeShape EntityType="EsStockDbModel.MemberUsersRoles" Width="1.875" PointX="7.625" PointY="1" />
+        <EntityTypeShape EntityType="EsStockDbModel.EsMembers" Width="1.5" PointX="3.75" PointY="4.375" />
+        <EntityTypeShape EntityType="EsStockDbModel.ESSharedProducts" Width="1.5" PointX="0.75" PointY="9.625" />
+        <EntityTypeShape EntityType="EsStockDbModel.EsUsers" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EsStockDbModel.MembersBrands" Width="1.5" PointX="6" PointY="7.625" />
+        <EntityTypeShape EntityType="EsStockDbModel.MembersRoles" Width="1.5" PointX="3.75" PointY="7.25" />
+        <EntityTypeShape EntityType="EsStockDbModel.MemberUsersRoles" Width="1.5" PointX="6" PointY="4.25" />
+        <AssociationConnector Association="EsStockDbModel.FK_MembersBrands_EsMembers" />
         <AssociationConnector Association="EsStockDbModel.FK_MemberUsersRoles_EsMembers" />
         <AssociationConnector Association="EsStockDbModel.FK_MemberUsersRoles_EsUsers" />
-        <EntityTypeShape EntityType="EsStockDbModel.MembersRoles" Width="1.5" PointX="7.875" PointY="4" />
         <AssociationConnector Association="EsStockDbModel.FK_MemberUsersRoles_MembersRoles" />
-      </Diagram>
+        <EntityTypeShape EntityType="EsStockDbModel.EsCategories" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EsStockDbModel.EsmMeasureOfUnits" Width="1.5" PointX="0.75" PointY="4.75" />
+        <AssociationConnector Association="EsStockDbModel.FK_EsCategories_EsCategories" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

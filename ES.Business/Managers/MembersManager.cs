@@ -16,9 +16,8 @@ namespace ES.Business.Managers
             return new EsMemberModel()
             {
                 Id = item.Id,
-                FullName = item.FullName,
-                Email = item.Email,
-                ClubSixteenId = item.ClubSixteenId
+                Name = item.Name,
+                ContractNumber = item.ContractNumber
             };
         }
         public static EsMembers Convert(EsMemberModel item)
@@ -26,9 +25,8 @@ namespace ES.Business.Managers
             return new EsMembers
             {
                 Id = item.Id,
-                FullName = item.FullName,
-                Email = item.Email,
-                ClubSixteenId = item.ClubSixteenId
+                Name = item.Name,
+                ContractNumber = item.ContractNumber
             };
         }
         public static MembersRoles Convert(MemberRoleModel item)
@@ -72,14 +70,13 @@ namespace ES.Business.Managers
                 try
                 {
                     var exItem = db.EsMembers.SingleOrDefault(s => s.Id == item.Id ||
-                        s.FullName.ToLower() == item.FullName.ToLower());
+                        s.Name.ToLower() == item.Name.ToLower());
                     
                     if (exItem != null && item.Id != 0)
                     {
                         exItem.Id = item.Id;
-                        exItem.FullName = item.FullName;
-                        exItem.Email = item.Email;
-                        exItem.ClubSixteenId = item.ClubSixteenId;
+                        exItem.Name = item.Name;
+                        exItem.ContractNumber = item.ContractNumber;
                     }
                     else
                     {

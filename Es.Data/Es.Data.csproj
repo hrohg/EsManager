@@ -48,6 +48,7 @@
     <Compile Include="Models\MemberRoleModel.cs" />
     <Compile Include="Models\MemberUsersRolesModel.cs" />
     <Compile Include="Models\ModelBase.cs" />
+    <Compile Include="Models\PartnerModel.cs" />
     <Compile Include="Models\ProductCategoriesModel.cs" />
     <Compile Include="Models\ProductGroupModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

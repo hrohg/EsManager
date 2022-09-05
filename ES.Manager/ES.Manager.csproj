@@ -59,6 +59,9 @@
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -85,12 +88,14 @@
     </ApplicationDefinition>
     <Compile Include="Enumerations\ExportProductEnum.cs" />
     <Compile Include="Enumerations\MessageEnums.cs" />
-    <Compile Include="Helper\Converters.cs" />
-    <Compile Include="Helper\FocusNextElementBehaviors.cs" />
-    <Compile Include="Helper\PasswordBoxBindingBehavior.cs" />
+    <Compile Include="Helpers\Converters.cs" />
+    <Compile Include="Helpers\ExportManager.cs" />
+    <Compile Include="Helpers\FocusNextElementBehaviors.cs" />
+    <Compile Include="Helpers\PasswordBoxBindingBehavior.cs" />
     <Compile Include="Interfaces\IShellViewModel.cs" />
     <Compile Include="Models\MessageModel.cs" />
     <Compile Include="ViewModels\Managers\EsCategoriesViewModel.cs" />
+    <Compile Include="ViewModels\Managers\EsPartnersViewModel.cs" />
     <Compile Include="ViewModels\Managers\ManageMembersViewModel.cs" />
     <Compile Include="ViewModels\Managers\ManageUsersViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
@@ -115,6 +120,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Managers\ManageMembersTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Managers\ManageEsPartners.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

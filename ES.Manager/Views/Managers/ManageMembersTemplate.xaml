@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:managers="clr-namespace:ES.Manager.ViewModels.Managers"
                     xmlns:model="clr-namespace:Es.Data.Models;assembly=Es.Data"
-                    xmlns:helper="clr-namespace:ES.Manager.Helper">
+                    xmlns:helper="clr-namespace:ES.Manager.Helpers">
 
     <helper:BoolInvertConverter x:Key="BoolInvertConverter"/>
 
@@ -31,7 +31,7 @@
                         <ListView Grid.Row="1" ItemsSource="{Binding EsMembers}" SelectedItem="{Binding SelectedMember}">
                             <ListView.ItemTemplate>
                                 <DataTemplate DataType="{x:Type model:EsMemberModel}">
-                                    <TextBlock Text="{Binding FullName}"/>
+                                    <TextBlock Text="{Binding Name}"/>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
@@ -57,15 +57,11 @@
                                 <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding SelectedMember.Id}"/>
                                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Անվանում:"/>
                                 <TextBox  Grid.Column="1" Grid.Row="1" 
-                                          Text="{Binding SelectedMember.FullName, UpdateSourceTrigger=PropertyChanged}" 
+                                          Text="{Binding SelectedMember.Name, UpdateSourceTrigger=PropertyChanged}" 
                                           IsEnabled="{Binding IsEnabledEditMode}" Margin="1"/>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Էլ փոստ:"/>
-                                <TextBox Grid.Column="1" Grid.Row="2" 
-                                         Text="{Binding SelectedMember.Email, UpdateSourceTrigger=PropertyChanged}" 
-                                         IsEnabled="{Binding IsEnabledEditMode}" Margin="1"/>
-                                <TextBlock Grid.Column="0" Grid.Row="3" Text="ClubSixteenId:"/>
+                                <TextBlock Grid.Column="0" Grid.Row="3" Text="Պայմանագիր:"/>
                                 <TextBox Grid.Column="1" Grid.Row="3" 
-                                         Text="{Binding SelectedMember.ClubSixteenId, UpdateSourceTrigger=PropertyChanged}" 
+                                         Text="{Binding SelectedMember.ContractNumber, UpdateSourceTrigger=PropertyChanged}" 
                                          IsEnabled="{Binding IsEnabledEditMode}" Margin="1"/>
 
                                 <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="1">

@@ -57,10 +57,9 @@ namespace Es.Data.Models
         #endregion Description and name
 
         public string HcDcs { get; set; }
-        public string Logo { get; set; }
         public bool IsActive { get; set; }
         public DateTime LastModificationDate { get; set; }
-        public long LastModifierId { get; set; }
+        public int LastModifierId { get; set; }
         #endregion External properties
 
         #region Constructors

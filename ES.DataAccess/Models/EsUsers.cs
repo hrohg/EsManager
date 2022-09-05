@@ -19,14 +19,14 @@ namespace ES.DataAccess.Models
             this.MemberUsersRoles = new HashSet<MemberUsersRoles>();
         }
     
-        public long UserId { get; set; }
+        public int UserId { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
         public string Mobile { get; set; }
         public bool IsActive { get; set; }
         public System.DateTime LastActivityDate { get; set; }
-        public string ClubSixteenId { get; set; }
+        public string EssClubId { get; set; }
     
         public virtual ICollection<MemberUsersRoles> MemberUsersRoles { get; set; }
     }

@@ -34,7 +34,6 @@ namespace ES.Manager.ViewModels
 
         #endregion Private properties
 
-
         #region External properties
 
         #region Avalon dock
@@ -89,6 +88,7 @@ namespace ES.Manager.ViewModels
             ImportSharedProductsToXmlCommand = new RelayCommand(OnImportSharedProductsToXml);
             ExportSharedProductsToXmlCommand = new RelayCommand<ExportProductEnum>(OnExportSharedProductsToXml);
             ManageEsCategoriesCommand = new RelayCommand(OnManageEsCategories);
+            ManagePartnersCommand = new RelayCommand(OnManageEsPartners);
         }
         private void OnAddDocument<T>(DocumentViewModel vm, bool allowDoublicate = true)
         {
@@ -160,11 +160,10 @@ namespace ES.Manager.ViewModels
                             Barcode = item.Barcode,
                             HcdCs = item.HCDCS,
                             Description = item.Description,
-                            Mu = item.Mu,
+                            MeasureOfunitId = item.MeasureOfunitId,
                             CostPrice = item.CostPrice,
                             Price = item.Price,
                             ExpiryDays = item.ExpiryDays,
-                            IsWeight = item.IsWeight
                         };
                         esProducts.Add(product);
                         XmlHelper.Save(esProducts, filePath.FileName);
@@ -181,6 +180,10 @@ namespace ES.Manager.ViewModels
         {
             OnAddDocument(new EsCategoriesViewModel());
         }
+        private void OnManageEsPartners(object o)
+        {
+            OnAddDocument(new EsPartnersViewModel());
+        }
         #endregion
 
         #region External methods
@@ -195,6 +198,7 @@ namespace ES.Manager.ViewModels
         public ICommand ImportSharedProductsToXmlCommand { get; private set; }
         public ICommand ExportSharedProductsToXmlCommand { get; private set; }
         public ICommand ManageEsCategoriesCommand { get; private set; }
+        public ICommand ManagePartnersCommand { get; private set; }
 
         #region ES Market
         private ICommand _manageEsMarketMembersCommand;
