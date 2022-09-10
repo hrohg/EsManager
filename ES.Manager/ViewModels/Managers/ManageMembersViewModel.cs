@@ -12,7 +12,7 @@ namespace ES.Manager.ViewModels.Managers
     public class ManageMembersViewModel : DocumentViewModel
     {
         #region Internal properties
-        #endregion //Internal properties
+        #endregion Internal properties
 
         #region External properties
 

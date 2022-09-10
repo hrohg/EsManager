@@ -19,7 +19,7 @@ namespace ES.Manager.Helpers
             {
                 foreach (var product in products)
                 {
-                    xlWSh.Cells[nextRow, 1].NumberFormat = "@";
+                    xlWSh.Cells[nextRow, 1].NumberFormat = "/@";
                     xlWSh.Cells[nextRow, 1].Value2 = product.CardNumber;
                     xlWSh.Cells[nextRow, 2].Value2 = product.CardNumberFormating;
                     nextRow++;
